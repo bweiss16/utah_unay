@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Integrating a New I2C Sensor</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&display=swap');
+
+  :root {
+    --ink: #1a1a1a;
+    --muted: #555;
+    --rule: #d0d0d0;
+    --accent: #1a5c9e;
+    --accent-light: #e8f0f9;
+    --warn: #7a3800;
+    --warn-bg: #fff4e6;
+    --success: #1a5c2a;
+    --success-bg: #eaf4ec;
+    --code-bg: #f3f3f3;
+    --step-size: 2rem;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: var(--ink);
+    background: white;
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 48px 56px 64px;
+  }
+
+  /* ── Header ── */
+  .doc-header {
+    border-bottom: 3px solid var(--ink);
+    padding-bottom: 16px;
+    margin-bottom: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .doc-header h1 {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    line-height: 1.2;
+  }
+  .doc-header .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-align: right;
+  }
+
+  /* ── Intro ── */
+  .intro {
+    background: var(--accent-light);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin-bottom: 32px;
+    font-size: 13px;
+  }
+  .intro strong { color: var(--accent); }
+
+  /* ── Section headers ── */
+  h2 {
+    font-size: 11px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 6px;
+    margin: 36px 0 18px;
+  }
+
+  /* ── Numbered steps ── */
+  .steps { counter-reset: step; }
+
+  .step {
+    display: grid;
+    grid-template-columns: var(--step-size) 1fr;
+    gap: 0 16px;
+    margin-bottom: 24px;
+    counter-increment: step;
+  }
+
+  .step-num {
+    width: var(--step-size);
+    height: var(--step-size);
+    background: var(--ink);
+    color: white;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .step-body h3 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    margin-top: 2px;
+  }
+
+  .step-body p { margin-bottom: 8px; font-size: 13px; }
+  .step-body p:last-child { margin-bottom: 0; }
+
+  .step-body ul {
+    margin: 6px 0 8px 16px;
+    font-size: 13px;
+  }
+  .step-body ul li { margin-bottom: 4px; }
+
+  /* ── Checkpoint boxes ── */
+  .checkpoint {
+    background: var(--success-bg);
+    border: 1px solid #a8d4b2;
+    border-radius: 3px;
+    padding: 10px 14px;
+    margin-top: 10px;
+    font-size: 12.5px;
+    color: var(--success);
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  .checkpoint::before {
+    content: "✓";
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── Warning boxes ── */
+  .warn-box {
+    background: var(--warn-bg);
+    border: 1px solid #f0c080;
+    border-radius: 3px;
+    padding: 10px 14px;
+    margin-top: 10px;
+    font-size: 12.5px;
+    color: var(--warn);
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  .warn-box::before {
+    content: "!";
+    font-weight: 700;
+    font-family: 'IBM Plex Mono', monospace;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── Code ── */
+  code {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    background: var(--code-bg);
+    padding: 1px 5px;
+    border-radius: 2px;
+  }
+
+  pre {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    background: var(--code-bg);
+    border: 1px solid var(--rule);
+    padding: 14px 16px;
+    margin: 10px 0;
+    overflow-x: auto;
+    line-height: 1.6;
+    border-radius: 3px;
+  }
+
+  pre .comment { color: #888; }
+  pre .keyword { color: var(--accent); font-weight: 600; }
+  pre .string { color: #2a7a3a; }
+
+  /* ── Inline label ── */
+  .tag {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    font-weight: 600;
+    background: var(--ink);
+    color: white;
+    padding: 1px 6px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+
+  /* ── Troubleshooting table ── */
+  .trouble-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+    margin-top: 4px;
+  }
+  .trouble-table th {
+    text-align: left;
+    font-weight: 600;
+    background: var(--code-bg);
+    padding: 8px 12px;
+    border: 1px solid var(--rule);
+  }
+  .trouble-table td {
+    padding: 8px 12px;
+    border: 1px solid var(--rule);
+    vertical-align: top;
+  }
+  .trouble-table tr:nth-child(even) td { background: #fafafa; }
+
+  /* ── Merge steps section ── */
+  .merge-block {
+    background: #fafafa;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 16px 18px;
+    margin: 10px 0;
+  }
+  .merge-block h4 {
+    font-size: 12.5px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  /* ── Footer ── */
+  .doc-footer {
+    margin-top: 48px;
+    padding-top: 14px;
+    border-top: 1px solid var(--rule);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    color: #aaa;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  @media print {
+    body { padding: 32px 40px; }
+    .step { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <h1>Integrating a New I2C Sensor<br><span style="font-weight:400;font-size:15px;color:#555">Day 2 — Independent Work Guide</span></h1>
+  <div class="label">Microcontrollers Workshop<br>Adafruit Feather Logger</div>
+</div>
+
+<div class="intro">
+  <strong>Your goal today:</strong> Find a sensor from the kit that interests you, wire it up, and get it logging alongside the temperature &amp; humidity data you set up yesterday. Work through these steps in order. Each step has a checkpoint — don't skip ahead until you've hit it. Ask for help when you're stuck, but try the troubleshooting tips first.
+</div>
+
+
+<h2>Step-by-Step</h2>
+
+<div class="steps">
+
+  <!-- STEP 1 -->
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h3>Pick your sensor</h3>
+      <p>Look through the I2C sensor kit. Choose one that seems interesting — don't overthink it. Some popular options that work well:</p>
+      <ul>
+        <li><strong>BME280</strong> — barometric pressure + altitude</li>
+        <li><strong>APDS-9960</strong> — color and gesture detection</li>
+        <li><strong>LSM6DS3 / MPU-6050</strong> — accelerometer (detects movement and orientation)</li>
+        <li><strong>VL53L0X</strong> — laser distance sensor</li>
+        <li><strong>SGP30</strong> — air quality (CO₂, VOC)</li>
+      </ul>
+      <p>Write down the <strong>exact part number</strong> printed on the sensor chip or breakout board label. You'll need this in the next step.</p>
+      <div class="checkpoint">You know your sensor's part number and you find it genuinely interesting.</div>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h3>Find the Arduino library</h3>
+      <p>In the Arduino IDE, open <strong>Tools → Manage Libraries</strong>. Search for your part number.</p>
+      <ul>
+        <li>Look for a library published by <strong>Adafruit</strong> or <strong>SparkFun</strong> — these are well-maintained and come with examples.</li>
+        <li>If you see multiple results, pick the one whose name most closely matches your part number.</li>
+        <li>Click <strong>Install</strong>. If it asks about installing dependencies, click <strong>Install All</strong>.</li>
+      </ul>
+      <div class="warn-box">If you can't find your sensor in the library manager, search the web for "<em>[part number]</em> Arduino library". The manufacturer usually has a GitHub page with install instructions.</div>
+      <div class="checkpoint">The library is installed and you can see it listed under Sketch → Include Library.</div>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h3>Wire up the sensor</h3>
+      <p>I2C sensors use four wires. Connect them as follows:</p>
+      <table class="trouble-table" style="margin:8px 0 10px">
+        <tr>
+          <th>Sensor pin</th>
+          <th>Feather Logger pin</th>
+          <th>What it does</th>
+        </tr>
+        <tr><td><code>VIN</code> or <code>VCC</code></td><td><code>3.3V</code></td><td>Power</td></tr>
+        <tr><td><code>GND</code></td><td><code>GND</code></td><td>Ground</td></tr>
+        <tr><td><code>SDA</code></td><td><code>SDA</code></td><td>Data</td></tr>
+        <tr><td><code>SCL</code></td><td><code>SCL</code></td><td>Clock</td></tr>
+      </table>
+      <div class="warn-box">The SDA and SCL pins on your Feather are already used by the temperature sensor. That's fine — I2C is a <em>bus</em>, meaning many sensors can share the same two wires. Just make sure all sensors share the same SDA, SCL, 3.3V, and GND.</div>
+      <div class="checkpoint">All four wires are connected securely. The board powers on without any smoke or burning smell.</div>
+    </div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h3>Run the example sketch</h3>
+      <p>Before touching your logging code, verify the sensor works on its own.</p>
+      <p>Go to <strong>File → Examples</strong> and find your sensor's library in the list. Open the example called something like <code>basicreadings</code>, <code>demo</code>, or <code>test</code>.</p>
+      <p>Upload it and open <strong>Tools → Serial Monitor</strong> (make sure the baud rate at the bottom right matches the <code>Serial.begin()</code> value in the sketch, usually <code>9600</code> or <code>115200</code>).</p>
+      <div class="warn-box">If you see garbled text in the Serial Monitor, the baud rate doesn't match. Check the number in <code>Serial.begin(____)</code> and set the dropdown to match.</div>
+      <div class="checkpoint">You can see real sensor readings scrolling in the Serial Monitor, and they change when you interact with the sensor (wave your hand near it, breathe on it, tilt it, etc.).</div>
+    </div>
+  </div>
+
+  <!-- STEP 5 -->
+  <div class="step">
+    <div class="step-num">5</div>
+    <div class="step-body">
+      <h3>Understand what the example is doing</h3>
+      <p>Before merging, spend 5 minutes reading through the example code. Look for answers to these questions — write them down if it helps:</p>
+      <ul>
+        <li>What does the <code>#include</code> line at the top say?</li>
+        <li>How is the sensor object created? (Usually something like <code>SensorName mySensor;</code>)</li>
+        <li>What happens in <code>setup()</code>? (Initialization — this runs once)</li>
+        <li>What function reads the sensor data in <code>loop()</code>? (e.g. <code>mySensor.readTemperature()</code>)</li>
+        <li>What variable holds the reading, and what are its units?</li>
+      </ul>
+      <div class="checkpoint">You can point to the one or two lines in the example that actually read the sensor value and explain in plain English what they do.</div>
+    </div>
+  </div>
+
+  <!-- STEP 6 -->
+  <div class="step">
+    <div class="step-num">6</div>
+    <div class="step-body">
+      <h3>Merge your sensor into the logging sketch</h3>
+      <p>Open your logging code from yesterday. You need to add four things from the example — think of it as transplanting pieces in order:</p>
+
+      <div class="merge-block">
+        <h4>① At the very top — include &amp; object</h4>
+        <p style="font-size:12.5px;margin-bottom:8px">Copy the <code>#include</code> line and the sensor object declaration from the example into the top of your logging sketch.</p>
+        <pre><span class="comment">// Already in your sketch:</span>
+#include &lt;Adafruit_SHT31.h&gt;
+Adafruit_SHT31 sht31;
+
+<span class="comment">// Add below it (example — yours will differ):</span>
+#include &lt;Adafruit_BMP280.h&gt;
+Adafruit_BMP280 bmp;</pre>
+      </div>
+
+      <div class="merge-block">
+        <h4>② Inside setup() — initialization</h4>
+        <p style="font-size:12.5px;margin-bottom:8px">Copy the sensor's initialization block (usually an <code>if (!sensor.begin())</code> check) into your <code>setup()</code>, after your existing sensor's init.</p>
+        <pre><span class="comment">// Example:</span>
+<span class="keyword">if</span> (!bmp.begin()) {
+  Serial.println(<span class="string">"Could not find BMP280!"</span>);
+  <span class="keyword">while</span> (1);  <span class="comment">// stop here if sensor not found</span>
+}</pre>
+      </div>
+
+      <div class="merge-block">
+        <h4>③ Inside loop() — read the value</h4>
+        <p style="font-size:12.5px;margin-bottom:8px">Where you currently read temperature and humidity, add lines to read your new sensor. Store the result in a variable.</p>
+        <pre>float pressure = bmp.readPressure() / 100.0;  <span class="comment">// hPa</span></pre>
+      </div>
+
+      <div class="merge-block">
+        <h4>④ In the SD logging line — add the new column</h4>
+        <p style="font-size:12.5px;margin-bottom:8px">Find where you write a line to the SD card. Add your new value, separated by a comma.</p>
+        <pre><span class="comment">// Before:</span>
+dataFile.println(String(temp) + <span class="string">","</span> + String(humidity));
+
+<span class="comment">// After:</span>
+dataFile.println(String(temp) + <span class="string">","</span> + String(humidity) + <span class="string">","</span> + String(pressure));</pre>
+      </div>
+
+      <div class="checkpoint">Your sketch compiles without errors (Sketch → Verify/Compile). Fix any red error messages before uploading.</div>
+    </div>
+  </div>
+
+  <!-- STEP 7 -->
+  <div class="step">
+    <div class="step-num">7</div>
+    <div class="step-body">
+      <h3>Test it</h3>
+      <p>Upload the merged sketch. Open the Serial Monitor and confirm you can see readings from <em>both</em> sensors printing together. Let it run for 30 seconds and make sure there are no error messages.</p>
+      <p>Then wipe the SD card, restart the board, and let it log for a minute. Remove the card, open the CSV file on a computer, and verify all your columns are there and the values look reasonable.</p>
+      <div class="checkpoint">Your CSV has a row for every logging interval and your new sensor's column is populated with real values.</div>
+    </div>
+  </div>
+
+  <!-- STEP 8 -->
+  <div class="step">
+    <div class="step-num">8</div>
+    <div class="step-body">
+      <h3>You're done — what's next?</h3>
+      <p>If you've got time and want to go further, pick one:</p>
+      <ul>
+        <li><strong>Add the I2C screen</strong> — display your new sensor's reading live on the display</li>
+        <li><strong>Add the RTC</strong> — give each row of your log file a real timestamp</li>
+        <li><strong>Add a second new sensor</strong> — repeat this whole guide from Step 1</li>
+        <li><strong>Write a graphing script</strong> — plot your new data column alongside temperature</li>
+      </ul>
+    </div>
+  </div>
+
+</div><!-- end steps -->
+
+
+<h2>Troubleshooting</h2>
+
+<table class="trouble-table">
+  <tr>
+    <th>Symptom</th>
+    <th>Most likely cause</th>
+    <th>Try this</th>
+  </tr>
+  <tr>
+    <td>Serial Monitor shows nothing</td>
+    <td>Baud rate mismatch, or wrong port</td>
+    <td>Check <code>Serial.begin()</code> value matches the Serial Monitor dropdown. Check Tools → Port.</td>
+  </tr>
+  <tr>
+    <td>"Could not find sensor!" on startup</td>
+    <td>Wiring error or wrong I2C address</td>
+    <td>Double-check SDA/SCL connections. Run the I2C Scanner sketch to confirm the sensor is visible on the bus.</td>
+  </tr>
+  <tr>
+    <td>Sketch won't compile — red errors</td>
+    <td>Missing library or typo</td>
+    <td>Read the first error carefully — it usually says exactly what's missing. Re-check your <code>#include</code> line matches the library name exactly.</td>
+  </tr>
+  <tr>
+    <td>Sensor reading is always 0 or NaN</td>
+    <td>Sensor initialized but not reading correctly</td>
+    <td>Go back to the plain example sketch. If it works there, compare your merge carefully — likely a missing variable or the read function wasn't called.</td>
+  </tr>
+  <tr>
+    <td>SD card file is missing the new column</td>
+    <td>Forgot to update the logging line</td>
+    <td>Search your code for <code>dataFile.println</code> and make sure your new variable is included in the string.</td>
+  </tr>
+  <tr>
+    <td>Two sensors, one stops working</td>
+    <td>I2C address conflict</td>
+    <td>Some sensors share a default I2C address. Ask a mentor — the fix usually involves soldering an address-select pad on the breakout board.</td>
+  </tr>
+</table>
+
+<h2>Quick Reference — I2C Scanner Sketch</h2>
+<p style="font-size:12.5px;margin-bottom:8px">If you're not sure your sensor is wired correctly, upload this sketch. It will print the I2C address of every device it finds. A healthy system should show one address per sensor.</p>
+<pre>#include &lt;Wire.h&gt;
+
+<span class="keyword">void</span> setup() {
+  Wire.begin();
+  Serial.begin(9600);
+  Serial.println(<span class="string">"Scanning I2C bus..."</span>);
+
+  <span class="keyword">for</span> (byte addr = 1; addr &lt; 127; addr++) {
+    Wire.beginTransmission(addr);
+    <span class="keyword">if</span> (Wire.endTransmission() == 0) {
+      Serial.print(<span class="string">"Found device at address 0x"</span>);
+      Serial.println(addr, HEX);
+    }
+  }
+  Serial.println(<span class="string">"Done."</span>);
+}
+
+<span class="keyword">void</span> loop() {}</pre>
+
+
+<div class="doc-footer">
+  <span>Microcontrollers Workshop — Day 2</span>
+  <span>Adafruit Feather Logger · Arduino IDE</span>
+</div>
+
+</body>
+</html>

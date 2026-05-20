@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 1 — Microcontrollers Workshop</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&display=swap');
+
+  :root {
+    --ink: #1a1a1a;
+    --muted: #555;
+    --rule: #d0d0d0;
+    --accent: #1a5c9e;
+    --accent-light: #e8f0f9;
+    --warn: #7a3800;
+    --warn-bg: #fff4e6;
+    --success: #1a5c2a;
+    --success-bg: #eaf4ec;
+    --code-bg: #f3f3f3;
+    --step-size: 2rem;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: var(--ink);
+    background: white;
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 48px 56px 64px;
+  }
+
+  /* ── Header ── */
+  .doc-header {
+    border-bottom: 3px solid var(--ink);
+    padding-bottom: 16px;
+    margin-bottom: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .doc-header h1 {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    line-height: 1.2;
+  }
+  .doc-header .label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-align: right;
+  }
+
+  /* ── Intro ── */
+  .intro {
+    background: var(--accent-light);
+    border-left: 4px solid var(--accent);
+    padding: 14px 18px;
+    margin-bottom: 32px;
+    font-size: 13px;
+  }
+  .intro strong { color: var(--accent); }
+
+  /* ── Module headers ── */
+  .module {
+    margin-top: 44px;
+  }
+
+  .module-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 10px;
+  }
+
+  .module-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    background: var(--ink);
+    color: white;
+    padding: 3px 8px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .module-header h2 {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+    border: none;
+    padding: 0;
+    margin: 0;
+    color: var(--ink);
+    text-transform: none;
+  }
+
+  .module-divider {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin-bottom: 18px;
+  }
+
+  .module-intro {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 18px;
+    font-style: italic;
+  }
+
+  /* ── Section sub-headers ── */
+  h3.section-label {
+    font-size: 11px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 6px;
+    margin: 24px 0 14px;
+  }
+
+  /* ── Numbered steps ── */
+  .steps { counter-reset: step; }
+
+  .step {
+    display: grid;
+    grid-template-columns: var(--step-size) 1fr;
+    gap: 0 16px;
+    margin-bottom: 20px;
+  }
+
+  .step-num {
+    width: var(--step-size);
+    height: var(--step-size);
+    background: var(--ink);
+    color: white;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .step-body h4 {
+    font-size: 13.5px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    margin-top: 2px;
+  }
+
+  .step-body p { margin-bottom: 8px; font-size: 13px; }
+  .step-body p:last-child { margin-bottom: 0; }
+  .step-body ul {
+    margin: 6px 0 8px 16px;
+    font-size: 13px;
+  }
+  .step-body ul li { margin-bottom: 3px; }
+
+  /* ── Checkpoint / warning boxes ── */
+  .checkpoint {
+    background: var(--success-bg);
+    border: 1px solid #a8d4b2;
+    border-radius: 3px;
+    padding: 10px 14px;
+    margin-top: 10px;
+    font-size: 12.5px;
+    color: var(--success);
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  .checkpoint::before {
+    content: "✓";
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .warn-box {
+    background: var(--warn-bg);
+    border: 1px solid #f0c080;
+    border-radius: 3px;
+    padding: 10px 14px;
+    margin-top: 10px;
+    font-size: 12.5px;
+    color: var(--warn);
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  .warn-box::before {
+    content: "!";
+    font-weight: 700;
+    font-family: 'IBM Plex Mono', monospace;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .info-box {
+    background: var(--accent-light);
+    border: 1px solid #aac8ea;
+    border-radius: 3px;
+    padding: 10px 14px;
+    margin-top: 10px;
+    font-size: 12.5px;
+    color: #1a3a5c;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  .info-box::before {
+    content: "i";
+    font-weight: 700;
+    font-family: 'IBM Plex Mono', monospace;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── Code ── */
+  code {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    background: var(--code-bg);
+    padding: 1px 5px;
+    border-radius: 2px;
+  }
+
+  pre {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    background: var(--code-bg);
+    border: 1px solid var(--rule);
+    padding: 14px 16px;
+    margin: 10px 0;
+    overflow-x: auto;
+    line-height: 1.6;
+    border-radius: 3px;
+  }
+  pre .comment { color: #888; }
+  pre .keyword { color: var(--accent); font-weight: 600; }
+  pre .string { color: #2a7a3a; }
+
+  /* ── placeholder block ── */
+  .placeholder {
+    border: 2px dashed var(--rule);
+    border-radius: 3px;
+    padding: 20px 18px;
+    margin: 12px 0;
+    color: #999;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    text-align: center;
+  }
+
+  /* ── Footer ── */
+  .doc-footer {
+    margin-top: 48px;
+    padding-top: 14px;
+    border-top: 1px solid var(--rule);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    color: #aaa;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  @media print {
+    body { padding: 32px 40px; }
+    .module { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <h1>Building a Sensor Logger<br><span style="font-weight:400;font-size:15px;color:#555">Day 1 — Follow-Along Guide</span></h1>
+  <div class="label">Microcontrollers Workshop<br>Adafruit Feather Logger</div>
+</div>
+
+<div class="intro">
+  <strong>Today's goal:</strong> By the end of the day you'll have a working sensor logger — a small computer that reads temperature and humidity, writes the data to an SD card, and can run on a battery in the field. You'll build it one piece at a time. Each module adds something new to what you already have.
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     MODULE 1 — BLINK AN LED
+════════════════════════════════════════════ -->
+<div class="module">
+  <div class="module-header">
+    <span class="module-num">Module 1</span>
+    <h2>Blink an LED</h2>
+  </div>
+  <hr class="module-divider">
+  <p class="module-intro">Your first program. You'll upload code to the Feather Logger and make its built-in LED blink on and off. This confirms that your board is working and that your computer can talk to it.</p>
+
+  <h3 class="section-label">Steps</h3>
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>Follow the Adafruit tutorial</h4>
+        <p>Navigate to the official Adafruit Feather Logger tutorial and follow the blink instructions there. The tutorial will walk you through installing the Arduino IDE, connecting your board, and uploading your first sketch.</p>
+        <div class="info-box">[PLACEHOLDER — insert tutorial URL here]</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>Explore the code</h4>
+        <p>Once the LED is blinking, look at the code. Try changing the numbers in the <code>delay()</code> calls and re-uploading. What happens when you make the numbers smaller? Larger?</p>
+        <div class="checkpoint">Your board's LED is blinking and you've successfully changed the blink speed.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     MODULE 2 — PHOTORESISTOR
+════════════════════════════════════════════ -->
+<div class="module">
+  <div class="module-header">
+    <span class="module-num">Module 2</span>
+    <h2>Read a Photoresistor</h2>
+  </div>
+  <hr class="module-divider">
+  <p class="module-intro">Your first sensor. A photoresistor changes its electrical resistance based on how much light hits it. You'll wire it up, read the value it produces, and watch it change in real time.</p>
+
+  <h3 class="section-label">Concept</h3>
+  <p style="font-size:13px;margin-bottom:8px">The Feather Logger has analog input pins that can measure voltage. Your photoresistor module outputs a voltage that changes with light level — higher voltage means more light. The board converts this to a number between 0 and 65535.</p>
+
+  <h3 class="section-label">Wiring</h3>
+  <div class="placeholder">[PLACEHOLDER — wiring diagram or pin table]</div>
+
+  <h3 class="section-label">Steps</h3>
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>Connect the sensor</h4>
+        <p>Wire the photoresistor module to your Feather Logger using the diagram above. It has three pins: <code>VCC</code>, <code>GND</code>, and <code>Signal</code>.</p>
+        <div class="warn-box">Make sure the board is unplugged from USB while you're wiring. Connect USB again once everything is in place.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>Upload the example code</h4>
+        <p>Open the example sketch provided and upload it to your board.</p>
+        <div class="placeholder">[PLACEHOLDER — example code]</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>Open the Serial Monitor</h4>
+        <p>Go to <strong>Tools → Serial Monitor</strong>. You should see numbers scrolling. Cover the sensor with your hand and watch the value change.</p>
+        <div class="checkpoint">Numbers are printing in the Serial Monitor and they change when you cover the sensor.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h4>Try the Serial Plotter</h4>
+        <p>Close the Serial Monitor and open <strong>Tools → Serial Plotter</strong>. Now you can see your data as a live graph. Wave your hand over the sensor and watch the line move.</p>
+        <div class="checkpoint">You can see the live graph responding to light changes.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     MODULE 3 — I2C TEMPERATURE SENSOR
+════════════════════════════════════════════ -->
+<div class="module">
+  <div class="module-header">
+    <span class="module-num">Module 3</span>
+    <h2>Add a Temperature &amp; Humidity Sensor</h2>
+  </div>
+  <hr class="module-divider">
+  <p class="module-intro">Your first digital sensor. Unlike the photoresistor, this sensor does its own math internally and sends you calibrated numbers over a protocol called I2C. You'll wire it up and read temperature and humidity values.</p>
+
+  <h3 class="section-label">Concept</h3>
+  <p style="font-size:13px;margin-bottom:8px">I2C is a way for a microcontroller to talk to many sensors over just two wires — one for data (<code>SDA</code>) and one for a clock signal (<code>SCL</code>). Each sensor has a unique address, like a house number, so the board knows who it's talking to.</p>
+
+  <h3 class="section-label">Wiring</h3>
+  <div class="placeholder">[PLACEHOLDER — wiring diagram or pin table]</div>
+
+  <h3 class="section-label">Steps</h3>
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>Install the library</h4>
+        <p>Go to <strong>Tools → Manage Libraries</strong> and search for the sensor library. Install it, and install any dependencies when prompted.</p>
+        <div class="placeholder">[PLACEHOLDER — library name]</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>Wire the sensor</h4>
+        <p>Connect the sensor's four pins to your Feather Logger using the diagram above: <code>VIN</code>, <code>GND</code>, <code>SDA</code>, and <code>SCL</code>.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>Upload the example code</h4>
+        <p>Open the example sketch and upload it.</p>
+        <div class="placeholder">[PLACEHOLDER — example code]</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h4>Interact with the sensor</h4>
+        <p>Open the Serial Monitor. You should see temperature and humidity values printing. Try these:</p>
+        <ul>
+          <li>Hold the sensor in your hand — does the temperature rise?</li>
+          <li>Breathe on it — does the humidity spike?</li>
+        </ul>
+        <div class="checkpoint">Temperature and humidity values are printing in the Serial Monitor and respond to your touch and breath.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     MODULE 4 — SD CARD LOGGING
+════════════════════════════════════════════ -->
+<div class="module">
+  <div class="module-header">
+    <span class="module-num">Module 4</span>
+    <h2>Log Data to the SD Card</h2>
+  </div>
+  <hr class="module-divider">
+  <p class="module-intro">Right now your sensor data disappears the moment it's printed. In this module you'll save it to the SD card so you can keep it, open it on a computer, and graph it. This turns your board into a real data logger.</p>
+
+  <h3 class="section-label">Concept</h3>
+  <p style="font-size:13px;margin-bottom:8px">Your code will open a file on the SD card, write a new line of data every few seconds, and keep the file updated. The output is a CSV file — a plain text format that spreadsheet programs and graphing scripts can read directly.</p>
+
+  <h3 class="section-label">Steps</h3>
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>Format and insert the SD card</h4>
+        <p>Make sure the SD card is formatted as FAT32. Insert it into the slot on the Feather Logger.</p>
+        <div class="warn-box">If the SD card has old files on it, delete them or reformat before starting. Old data files can cause confusion when you're reading your results later.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>Upload the logging sketch</h4>
+        <p>Open the logging example code and upload it. This sketch reads from the temperature sensor and writes each reading to a file called <code>data.csv</code> on the SD card.</p>
+        <div class="placeholder">[PLACEHOLDER — logging code]</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>Let it run</h4>
+        <p>Let the board log data for at least 2–3 minutes. You'll see confirmation messages in the Serial Monitor each time a row is written.</p>
+        <div class="checkpoint">The Serial Monitor is showing a confirmation message each time a row is saved to the SD card.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h4>Read the data</h4>
+        <p>Unplug the board, remove the SD card, and insert it into a computer. Open <code>data.csv</code> — you should see a table of timestamps, temperatures, and humidity values.</p>
+        <div class="checkpoint">You can open the CSV file and see rows of real data from your sensor.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <h4>Graph your data</h4>
+        <p>Run the provided graphing script on your CSV file to see your data plotted over time.</p>
+        <div class="placeholder">[PLACEHOLDER — graphing script instructions]</div>
+        <div class="checkpoint">You have a graph showing temperature and humidity over the time you were logging.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<div class="doc-footer">
+  <span>Microcontrollers Workshop — Day 1</span>
+  <span>Adafruit Feather Logger · Arduino IDE</span>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+# Arduino
+*.ino.elf
+*.ino.hex
+*.ino.bin
+*.ino.map
+build/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.env
+venv/
+*.egg-info/
+
+# Data files (SD card dumps — don't commit raw data)
+*.csv
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
