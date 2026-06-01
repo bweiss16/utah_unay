@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 1 — Microcontrollers Workshop</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&display=swap');
+
+  :root {
+    --ink: #1a1a1a;
+    --muted: #555;
+    --rule: #d0d0d0;
+    --accent: #1a5c9e;
+    --accent-light: #e8f0f9;
+    --warn: #7a3800;
+    --warn-bg: #fff4e6;
+    --success: #1a5c2a;
+    --success-bg: #eaf4ec;
+    --code-bg: #f3f3f3;
+    --step-size: 2rem;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: var(--ink);
+    background: white;
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 48px 56px 64px;
+  }
+
+  .doc-header {
+    border-bottom: 3px solid var(--ink);
+    padding-bottom: 16px;
+    margin-bottom: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .doc-header h1 { font-size: 22px; font-weight: 600; letter-spacing: -0.3px; line-height: 1.2; }
+  .doc-header .label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); text-align: right; }
+
+  .intro { background: var(--accent-light); border-left: 4px solid var(--accent); padding: 14px 18px; margin-bottom: 32px; font-size: 13px; }
+  .intro strong { color: var(--accent); }
+
+  .module { margin-top: 44px; }
+  .module-header { display: flex; align-items: center; gap: 14px; margin-bottom: 10px; }
+  .module-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600; background: var(--ink); color: white; padding: 3px 8px; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; }
+  .module-header h2 { font-size: 17px; font-weight: 600; letter-spacing: -0.2px; border: none; padding: 0; margin: 0; color: var(--ink); text-transform: none; }
+  .module-divider { border: none; border-top: 1px solid var(--rule); margin-bottom: 18px; }
+  .module-intro { font-size: 13px; color: var(--muted); margin-bottom: 18px; font-style: italic; }
+
+  h3.section-label { font-size: 11px; font-family: 'IBM Plex Mono', monospace; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); border-bottom: 1px solid var(--rule); padding-bottom: 6px; margin: 24px 0 14px; }
+
+  .steps { counter-reset: step; }
+  .step { display: grid; grid-template-columns: var(--step-size) 1fr; gap: 0 16px; margin-bottom: 20px; }
+  .step-num { width: var(--step-size); height: var(--step-size); background: var(--ink); color: white; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+  .step-body h4 { font-size: 13.5px; font-weight: 600; margin-bottom: 5px; margin-top: 2px; }
+  .step-body p { margin-bottom: 8px; font-size: 13px; }
+  .step-body p:last-child { margin-bottom: 0; }
+  .step-body ul { margin: 6px 0 8px 16px; font-size: 13px; }
+  .step-body ul li { margin-bottom: 3px; }
+
+  .checkpoint { background: var(--success-bg); border: 1px solid #a8d4b2; border-radius: 3px; padding: 10px 14px; margin-top: 10px; font-size: 12.5px; color: var(--success); display: flex; gap: 8px; align-items: flex-start; }
+  .checkpoint::before { content: "✓"; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+  .warn-box { background: var(--warn-bg); border: 1px solid #f0c080; border-radius: 3px; padding: 10px 14px; margin-top: 10px; font-size: 12.5px; color: var(--warn); display: flex; gap: 8px; align-items: flex-start; }
+  .warn-box::before { content: "!"; font-weight: 700; font-family: 'IBM Plex Mono', monospace; flex-shrink: 0; margin-top: 1px; }
+
+  .info-box { background: var(--accent-light); border: 1px solid #aac8ea; border-radius: 3px; padding: 10px 14px; margin-top: 10px; font-size: 12.5px; color: #1a3a5c; display: flex; gap: 8px; align-items: flex-start; }
+  .info-box::before { content: "i"; font-weight: 700; font-family: 'IBM Plex Mono', monospace; flex-shrink: 0; margin-top: 1px; }
+
+  code { font-family: 'IBM Plex Mono', monospace; font-size: 12px; background: var(--code-bg); padding: 1px 5px; border-radius: 2px; }
+
+  pre { font-family: 'IBM Plex Mono', monospace; font-size: 12px; background: var(--code-bg); border: 1px solid var(--rule); padding: 14px 16px; margin: 10px 0; overflow-x: auto; line-height: 1.6; border-radius: 3px; }
+  pre .comment { color: #888; }
+  pre .keyword { color: var(--accent); font-weight: 600; }
+
+  .wiring-table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin: 10px 0; }
+  .wiring-table th { text-align: left; font-weight: 600; background: var(--code-bg); padding: 8px 12px; border: 1px solid var(--rule); }
+  .wiring-table td { padding: 8px 12px; border: 1px solid var(--rule); }
+  .wiring-table tr:nth-child(even) td { background: #fafafa; }
+
+  .doc-footer { margin-top: 48px; padding-top: 14px; border-top: 1px solid var(--rule); font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #aaa; display: flex; justify-content: space-between; }
+
+  @media print {
+    body { padding: 32px 40px; }
+    .module { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<div class="doc-header">
+  <h1>Building a Sensor Logger<br><span style="font-weight:400;font-size:15px;color:#555">Day 1 — Follow-Along Guide</span></h1>
+  <div class="label">Microcontrollers Workshop<br>Adafruit Feather RP2040 Adalogger</div>
+</div>
+
+<div class="intro">
+  <strong>Today's goal:</strong> By the end of the day you'll have a working sensor logger — a small computer that measures light, temperature, and humidity, saves the data to an SD card, and runs on a battery in the field. You'll build it one module at a time. Each module adds something new to what you already have.
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     RECOVERY BOX
+════════════════════════════════════════════ -->
+<div class="module" style="border: 2px solid #c0392b; border-radius: 4px; padding: 18px 22px; margin-top: 32px; background: #fff8f7;">
+  <div class="module-header">
+    <span class="module-num" style="background:#c0392b;">🆘 Recovery</span>
+    <h2 style="color:#c0392b;">If Your Board Stops Showing Up as a Port</h2>
+  </div>
+  <hr class="module-divider">
+  <p style="font-size:13px; margin-bottom:10px;">On the RP2040, the USB connection is managed by the microcontroller itself — not a separate chip. If a sketch crashes before USB initializes, the port disappears. This is normal and recoverable.</p>
+  <ol style="font-size:13px; margin-left:18px; line-height:2;">
+    <li>Hold the <strong>BOOT</strong> button on the board</li>
+    <li>While holding BOOT, unplug and replug the USB cable</li>
+    <li>Release BOOT — a drive called <strong>RPI-RP2</strong> should appear on your computer</li>
+    <li>In Arduino IDE, open <strong>File → Examples → 01.Basics → Blink</strong></li>
+    <li>Select your board under <strong>Tools → Board</strong></li>
+    <li>Select the port under <strong>Tools → Port</strong> — it may appear as <code>UF2 Bootloader</code> or <code>RPI-RP2</code></li>
+    <li>Upload Blink — the board will reboot and the normal port will reappear</li>
+    <li>You can now re-upload whichever sketch you were working on</li>
+  </ol>
+  <div class="info-box" style="margin-top:12px;">If no port appears in step 6, go to <strong>Sketch → Export Compiled Binary</strong> while Blink is open, then drag the resulting <code>.uf2</code> file onto the RPI-RP2 drive.</div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     MODULE 1 — BLINK AN LED
+════════════════════════════════════════════ -->
+<div class="module">
+  <div class="module-header">
+    <span class="module-num">Module 1</span>
+    <h2>Blink an LED</h2>
+  </div>
+  <hr class="module-divider">
+  <p class="module-intro">Your first program. You'll get the Arduino IDE talking to the Feather RP2040, upload a sketch, and make the board's built-in LED blink. This confirms everything is set up correctly before you add any sensors.</p>
+
+  <h3 class="section-label">Steps</h3>
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>Set up Arduino IDE for the RP2040</h4>
+        <p>Follow the Adafruit setup tutorial — work through each section in order:</p>
+        <div class="info-box"><a href="https://learn.adafruit.com/adafruit-feather-rp2040-adalogger/arduino" target="_blank">learn.adafruit.com/adafruit-feather-rp2040-adalogger/arduino</a></div>
+        <ul style="margin: 10px 0 8px 0; list-style: none; padding: 0; font-size: 13px;">
+          <li style="margin-bottom:5px"><input type="checkbox"> &nbsp;A) Adding the Philhower Board Manager URL</li>
+          <li style="margin-bottom:5px"><input type="checkbox"> &nbsp;B) Add Board Support Package</li>
+          <li style="margin-bottom:5px"><input type="checkbox"> &nbsp;C) Choose Your Board</li>
+          <li style="margin-bottom:5px"><input type="checkbox"> &nbsp;D) Go to next page by selecting "Arduino Usage"</li>
+          <li style="margin-bottom:5px"><input type="checkbox"> &nbsp;E) Plug in your board</li>
+          <li style="margin-bottom:5px"><input type="checkbox"> &nbsp;F) Select port</li>
+          <li style="margin-bottom:5px"><input type="checkbox"> &nbsp;G) Load the example Blink sketch</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>Upload CODE_1 and experiment with the timing</h4>
+        <p>The built-in Blink example can't be edited directly. Open <code>CODE_1_blink</code> from the workshop sketches instead — it's the same sketch, but yours to modify. Find the two <code>delay()</code> calls and try changing the numbers. What happens when you make one value much larger than the other?</p>
+        <div class="checkpoint">Your board's LED is blinking and you've changed the timing to see the effect.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     MODULE 2 — LIGHT SENSOR
+════════════════════════════════════════════ -->
+<div class="module">
+  <div class="module-header">
+    <span class="module-num">Module 2</span>
+    <h2>Sensing Light</h2>
+  </div>
+  <hr class="module-divider">
+  <p class="module-intro">Your first sensor. The BH1750 measures ambient light and reports the value directly in lux — the standard unit for light intensity. You'll connect it via a Qwiic cable, install its library, and watch the data stream live.</p>
+
+  <h3 class="section-label">Concept</h3>
+  <p style="font-size:13px;margin-bottom:8px">The BH1750 communicates over <strong>I2C</strong> — a protocol that lets a microcontroller talk to sensors using just two wires: one for data (<code>SDA</code>) and one for a clock signal (<code>SCL</code>). The Feather RP2040 Adalogger has a STEMMA QT port that exposes these pins via a small JST connector, so no individual wires are needed at all.</p>
+
+  <h3 class="section-label">Wiring</h3>
+  <p style="font-size:13px;margin-bottom:8px">Plug one end of a Qwiic/STEMMA QT cable into the port on your Feather and the other end into either port on the BH1750 breakout. That's it — all four connections (power, ground, SDA, SCL) are made by the cable.</p>
+  <div class="warn-box">Make sure the board is unplugged from USB before connecting the cable. Connect USB again once the cable is in place.</div>
+
+  <h3 class="section-label">Install the Library</h3>
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>Install the BH1750 library</h4>
+        <p>Go to <strong>Tools → Manage Libraries</strong>, search for <code>Adafruit BH1750</code>, and install it. Install any dependencies when prompted.</p>
+        <div class="checkpoint">The library is installed and visible under Sketch → Include Library.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <h3 class="section-label">Steps</h3>
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>Upload CODE_2</h4>
+        <p>Open <code>CODE_2_light_sensor</code> and upload it. This sketch reads lux values from the BH1750 and prints them to the Serial Monitor.</p>
+        <div class="info-box">[PLACEHOLDER — CODE_2 link or file path]</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>Watch the data stream</h4>
+        <p>Go to <strong>Tools → Serial Monitor</strong>. Make sure the baud rate dropdown at the bottom right matches the value in the sketch. You should see lux values scrolling. Cover the sensor with your hand and watch the number drop.</p>
+        <div class="checkpoint">Lux values are printing in the Serial Monitor and change when you cover the sensor.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h4>Try the Serial Plotter</h4>
+        <p>Close the Serial Monitor and open <strong>Tools → Serial Plotter</strong>. You'll see the lux value as a live graph. Wave your hand over the sensor and watch the line respond.</p>
+        <div class="checkpoint">You can see the live graph reacting to changes in light level.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     MODULE 3 — TEMP & HUMIDITY SENSOR
+════════════════════════════════════════════ -->
+<div class="module">
+  <div class="module-header">
+    <span class="module-num">Module 3</span>
+    <h2>Sensing Temperature &amp; Humidity</h2>
+  </div>
+  <hr class="module-divider">
+  <p class="module-intro">Add a second I2C sensor — the AHT20 — by daisy-chaining it after the BH1750. Because I2C is a bus, multiple sensors share the same two wires simultaneously. Your serial output will now show three values at once: lux, temperature, and humidity.</p>
+
+  <h3 class="section-label">Concept</h3>
+  <p style="font-size:13px;margin-bottom:8px">The Feather's STEMMA QT port and the BH1750 breakout each have <strong>two</strong> Qwiic connectors — one in, one out. This lets you chain sensors together in a line. Each sensor has a unique I2C address so the microcontroller can tell them apart, even though they share the same wires.</p>
+
+  <h3 class="section-label">Wiring</h3>
+  <p style="font-size:13px;margin-bottom:8px">Plug a second Qwiic cable into the unused port on the BH1750 and connect the other end to either port on the AHT20. Your chain should look like:</p>
+  <p style="font-family:'IBM Plex Mono',monospace;font-size:12px;background:var(--code-bg);padding:10px 14px;border-radius:3px;margin-bottom:8px;">Feather RP2040 → BH1750 → AHT20</p>
+
+  <table class="wiring-table">
+    <tr><th>Sensor</th><th>I2C Address</th><th>What it measures</th></tr>
+    <tr><td>BH1750</td><td><code>0x23</code></td><td>Light (lux)</td></tr>
+    <tr><td>AHT20</td><td><code>0x38</code></td><td>Temperature (°C) &amp; humidity (%RH)</td></tr>
+  </table>
+
+  <h3 class="section-label">Install the Library</h3>
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>Install the AHT20 library</h4>
+        <p>Go to <strong>Tools → Manage Libraries</strong>, search for <code>Adafruit AHTX0</code>, and install it. Install any dependencies when prompted.</p>
+        <div class="checkpoint">The library is installed and visible under Sketch → Include Library.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <h3 class="section-label">Steps</h3>
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>Upload CODE_3</h4>
+        <p>Open <code>light_temp_humidity</code> and upload it. This sketch reads from both sensors and prints three values — lux, temperature, and humidity — to the Serial Monitor on each line.</p>
+        <div class="info-box">[PLACEHOLDER — CODE_3 link or file path]</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>Interact with the sensors</h4>
+        <p>Open the Serial Monitor. You should see three values streaming. Try these:</p>
+        <ul>
+          <li>Cover the BH1750 — does the lux value drop?</li>
+          <li>Hold the AHT20 in your palm — does temperature rise slowly?</li>
+          <li>Breathe on the AHT20 — does humidity spike?</li>
+        </ul>
+        <div class="checkpoint">Three values are printing on each row and all three respond to your interactions.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     MODULE 4 — SD CARD LOGGING
+════════════════════════════════════════════ -->
+<div class="module">
+  <div class="module-header">
+    <span class="module-num">Module 4</span>
+    <h2>Data Logging</h2>
+  </div>
+  <hr class="module-divider">
+  <p class="module-intro">Right now, all your data disappears the moment you unplug the USB cable. In this module you'll save every reading to the SD card so you can keep it, transfer it to a computer, and graph it. This is what makes your board a real data logger.</p>
+
+  <h3 class="section-label">Concept</h3>
+  <p style="font-size:13px;margin-bottom:8px">Your sketch will open a file on the SD card and append a new row of data every few seconds. The file is saved as a <strong>CSV</strong> (comma-separated values) — a simple text format that any graphing tool or spreadsheet can read. Each row will contain a reading count, lux, temperature, and humidity.</p>
+
+  <h3 class="section-label">Steps</h3>
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>Install the SD library</h4>
+        <p>Go to <strong>Tools → Manage Libraries</strong>, search for <code>SdFat - Adafruit Fork</code>, and install it. Install any dependencies when prompted.</p>
+        <div class="checkpoint">The library is installed and visible under Sketch → Include Library.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>Insert the SD card</h4>
+        <p>Make sure the SD card is formatted as FAT32 and has no old files on it. Slide it into the slot on the underside of the Feather until it clicks.</p>
+        <div class="warn-box">If there are old files on the SD card, delete them before starting. A leftover <code>log.csv</code> from a previous session will have your new data appended to the end, which can cause confusion when graphing.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>Upload <code>log</code></h4>
+        <p>Open the <code>log</code> sketch and upload it. It reads from both sensors and writes a new row to <code>log.csv</code> on the SD card every second. Each row is also printed to the Serial Monitor so you can confirm it's working.</p>
+        <div class="info-box">[PLACEHOLDER — log sketch link or file path]</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h4>Let it log</h4>
+        <p>Open the Serial Monitor. You should see rows of data printing, each one confirming a successful write to the SD card. Let it run for at least 3 minutes — longer if you want more data to graph.</p>
+        <div class="checkpoint">The Serial Monitor is showing a new row every few seconds, each one confirming a successful SD card write.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <h4>Retrieve the data</h4>
+        <p>Unplug the board. Remove the SD card and insert it into the USB SD card reader, then plug the reader into your computer. Open the <code>log.csv</code> file — you should see a table of readings.</p>
+        <div class="checkpoint">You can open <code>log.csv</code> and see rows of real sensor data.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     MODULE 5 — VISUALIZING DATA
+════════════════════════════════════════════ -->
+<div class="module">
+  <div class="module-header">
+    <span class="module-num">Module 5</span>
+    <h2>Visualizing Data</h2>
+  </div>
+  <hr class="module-divider">
+  <p class="module-intro">Numbers in a CSV file are hard to interpret at a glance. In this module you'll upload your data to a graphing tool and see all three sensor channels plotted over time.</p>
+
+  <h3 class="section-label">Steps</h3>
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>Open the graphing tool</h4>
+        <p>In a browser, navigate to the workshop graphing tool:</p>
+        <div class="info-box"><a href="https://bweiss16.github.io/utah_unay/graph" target="_blank">bweiss16.github.io/utah_unay/graph</a></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>Upload your CSV</h4>
+        <p>Click <strong>Upload CSV</strong> and select your <code>log.csv</code> file. The tool will plot all three channels — lux, temperature, and humidity — on a graph.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>Read your data</h4>
+        <p>Look at the graph and see if you can spot any patterns. Can you identify moments where you covered the light sensor? Where you breathed on the humidity sensor?</p>
+        <div class="checkpoint">You have a graph with all three sensor channels plotted over time.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     MODULE 6 — DEPLOYMENT
+════════════════════════════════════════════ -->
+<div class="module">
+  <div class="module-header">
+    <span class="module-num">Module 6</span>
+    <h2>Make It Deployable</h2>
+  </div>
+  <hr class="module-divider">
+  <p class="module-intro">Your logger is fully functional — now you'll deploy it like a real instrument. You'll wipe the SD card for a clean dataset, switch to battery power, seal everything in the weatherproof case, and take it outside.</p>
+
+  <h3 class="section-label">Steps</h3>
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>Prepare a fresh SD card</h4>
+        <p>Remove the SD card, delete <code>log.csv</code> (or reformat the card), and reinsert it. Your deployment will start with a clean dataset.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>Switch to battery power</h4>
+        <p>Unplug the USB cable and connect the LiPo battery to the JST connector on the Feather. The board should restart and begin logging automatically.</p>
+        <div class="warn-box">Make sure CODE_4 is still uploaded — the board will run whatever sketch was last uploaded when it powers on.</div>
+        <div class="checkpoint">The board is running on battery and logging without a USB connection.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>Seal it in the case</h4>
+        <p>Place your Feather and sensors inside the Pelican case. Close the lid. Your logger is now sealed and ready to be placed in the field.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h4>Deploy outside</h4>
+        <p>Take your logger outside and place it somewhere interesting — in the sun, in the shade, on the ground. Leave it for at least 10 minutes.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <h4>Retrieve and graph your data</h4>
+        <p>Bring the logger back in. Remove the SD card, upload <code>log.csv</code> to the graphing tool, and look at what you captured. Can you see the difference between sun and shade? Did the temperature change while it was outside?</p>
+        <div class="checkpoint">You have a graph showing real environmental data from your outdoor deployment.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<div class="doc-footer">
+  <span>Microcontrollers Workshop — Day 1</span>
+  <span>Adafruit Feather RP2040 Adalogger · Arduino IDE</span>
+</div>
+
+</body>
+</html>

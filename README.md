@@ -1,55 +1,103 @@
 # Utah UNAY Microcontrollers Workshop 2026
 
-A weekend introduction to microcontrollers and sensor logging for high school students. Students build a working environmental data logger from scratch using an Adafruit Feather Logger, I2C sensors, and an SD card.
+A weekend introduction to microcontrollers and sensor logging for high school students. Students build a working environmental data logger from scratch using an Adafruit Feather RP2040 Adalogger, I2C sensors, and an SD card.
+
+🌐 **Workshop site:** [bweiss16.github.io/utah_unay](https://bweiss16.github.io/utah_unay)
+
+---
 
 ## Workshop Overview
 
-**Day 1** — Guided build. Students work through four modules, ending with a deployed sensor logger writing data to an SD card.
+### Day 1 — Guided Build
 
-| Module | Topic |
-|--------|-------|
-| 1 | Blink an LED — first upload, verify the board works |
-| 2 | Photoresistor — first analog sensor, Serial Plotter |
-| 3 | Temperature & humidity sensor — intro to I2C |
-| 4 | SD card logging — saving and graphing real data |
+Students work through six modules, ending with a deployed sensor system sealed in a weatherproof enclosure.
 
-**Day 2** — Independent work. Students choose a new I2C sensor from the kit, integrate it into their logger, and get it logging alongside temperature and humidity.
+| Module | Topic | Key Steps |
+|--------|-------|-----------|
+| 1 | **Blink an LED** | Set up Arduino IDE for the RP2040, upload `CODE_1`, experiment with delay timing |
+| 2 | **Sensing Light** | Connect BH1750 via Qwiic, install library, upload `CODE_2`, Serial Monitor + Serial Plotter |
+| 3 | **Sensing Temperature & Humidity** | Daisy-chain AHT20 after BH1750, upload `CODE_3`, view 3-parameter data stream |
+| 4 | **Data Logging** | Insert SD card, upload `CODE_4`, log data for a few minutes, retrieve `log.csv` via SD card reader |
+| 5 | **Visualizing Data** | Upload `log.csv` to the web graphing tool, view plotted sensor data |
+| 6 | **Deployment** | Place system in Pelican case, go outside and deploy |
+
+### Day 2 — Add the Display
+
+Students add the Adafruit FeatherWing OLED 128x64 display to their logger. They'll run the example sketch first to verify it works, then upload the provided code to display all three sensor readings (light, temperature, humidity) live on screen.
+
+---
+
+## Student Guides
+
+| Guide | Rendered | Markdown |
+|-------|----------|----------|
+| Day 1 — Building a Sensor Logger | [View](https://bweiss16.github.io/utah_unay/guides/day1-guide.html) | [guides/day1-guide.md](guides/day1-guide.md) |
+| Day 2 — Adding the Display | [View](https://bweiss16.github.io/utah_unay/guides/day2-guide.html) | [guides/day2-guide.md](guides/day2-guide.md) |
+
+---
 
 ## Hardware
 
 Each student kit contains:
-- Adafruit Feather Logger
-- Photoresistor module (3-pin breakout)
-- I2C temperature & humidity sensor
-- I2C sensor assortment kit (for Day 2)
-- SD card
-- Battery
-- Jumper wires and assorted components
+
+| Item | Part | Purpose |
+|------|------|---------|
+| Adafruit Feather RP2040 Adalogger | [#5359](https://www.adafruit.com/product/5359) | Main microcontroller + SD card |
+| BH1750 Light Sensor | [#4681](https://www.adafruit.com/product/4681) | Module 2 — light sensing |
+| AHT20 Temp & Humidity Sensor | [#4566](https://www.adafruit.com/product/4566) | Module 3 — temperature & humidity |
+| FeatherWing OLED 128x64 | [#4650](https://www.adafruit.com/product/4650) | Day 2 — live display |
+| Qwiic/STEMMA QT cables | — | Solder-free I2C connections |
+| MicroSD card | — | Data logging |
+| USB SD card reader | — | Transferring log.csv to computer |
+| LiPo battery | — | Portable deployment |
+| Pelican case (small) | — | Weatherproof enclosure for deployment |
+
+---
 
 ## Repo Structure
 
 ```
-utah_unay_2026/
-├── guides/                  # Printed student handouts
+utah_unay/
+├── index.html                    # GitHub Pages landing page
+├── graph/                        # Web-based CSV graphing tool
+│   └── index.html
+├── guides/                       # Student handouts (HTML + Markdown)
 │   ├── day1-guide.html
-│   └── day2-sensor-integration-guide.html
-├── sketches/                # Arduino sketches for each module
-│   ├── 01_blink/
-│   ├── 02_photoresistor/
-│   ├── 03_temp_humidity/
-│   └── 04_sd_logging/
-├── scripts/                 # Data processing and graphing
-│   └── graph_data.py
+│   ├── day1-guide.md
+│   ├── day2-guide.html
+│   └── day2-guide.md
+├── sketches/                     # Arduino sketches for each module
+│   ├── light_temp_humidity/
+│   ├── log/
+│   └── log_display/
 └── README.md
 ```
 
+---
+
 ## Software Requirements
 
-- [Arduino IDE](https://www.arduino.cc/en/software)
-- Python 3 (for graphing script)
-  - `matplotlib`
-  - `pandas`
+- [Arduino IDE](https://www.arduino.cc/en/software) with the [Earle Philhower RP2040 core](https://github.com/earlephilhower/arduino-pico) installed
+- Arduino libraries (all installable via Library Manager):
+  - `Adafruit BH1750`
+  - `Adafruit AHTX0`
+  - `Adafruit SSD1306`
+  - `Adafruit GFX Library`
+  - `SD` (built-in)
+- A web browser (for the graphing tool — no Python required)
 
-## Instructor Notes
+---
 
-Student guides are in `guides/`. Each guide has placeholder sections marked with dashed boxes — fill these in with the appropriate code snippets and wiring diagrams before printing.
+## Data Visualization
+
+Students retrieve their `log.csv` from the SD card using a USB card reader and upload it to the hosted graphing tool at:
+
+**[bweiss16.github.io/utah_unay/graph](https://bweiss16.github.io/utah_unay/graph)**
+
+No software installation required — the tool runs entirely in the browser.
+
+---
+
+## GitHub Pages Setup
+
+To enable the workshop site, go to **Settings → Pages**, set the source branch to `main` and the folder to `/ (root)`, and save. The site will be live at `https://bweiss16.github.io/utah_unay` within a minute or two.
