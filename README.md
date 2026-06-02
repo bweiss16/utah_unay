@@ -1,4 +1,4 @@
-# Utah UNAY Microcontrollers Workshop 2026
+# Utah Unây Workshop 2026
 
 A weekend introduction to microcontrollers and sensor logging for high school students. Students build a working environmental data logger from scratch using an Adafruit Feather RP2040 Adalogger, I2C sensors, and an SD card.
 
@@ -14,10 +14,10 @@ Students work through six modules, ending with a deployed sensor system sealed i
 
 | Module | Topic | Key Steps |
 |--------|-------|-----------|
-| 1 | **Blink an LED** | Set up Arduino IDE for the RP2040, upload `CODE_1`, experiment with delay timing |
-| 2 | **Sensing Light** | Connect BH1750 via Qwiic, install library, upload `CODE_2`, Serial Monitor + Serial Plotter |
-| 3 | **Sensing Temperature & Humidity** | Daisy-chain AHT20 after BH1750, upload `CODE_3`, view 3-parameter data stream |
-| 4 | **Data Logging** | Insert SD card, upload `CODE_4`, log data for a few minutes, retrieve `log.csv` via SD card reader |
+| 1 | **Blink an LED** | Set up Arduino IDE for the RP2040, open built-in Blink example, experiment with delay timing |
+| 2 | **Sensing Light** | Connect BH1750 via Qwiic, install library, open BareMinimum example, Serial Monitor + Serial Plotter |
+| 3 | **Sensing Temperature & Humidity** | Daisy-chain AHT20 after BH1750, verify with AHT20 example, upload `light_temp_humidity` |
+| 4 | **Data Logging** | Insert SD card, upload `log`, log data for a few minutes, retrieve `log.csv` via SD card reader |
 | 5 | **Visualizing Data** | Upload `log.csv` to the web graphing tool, view plotted sensor data |
 | 6 | **Deployment** | Place system in Pelican case, go outside and deploy |
 
@@ -79,11 +79,12 @@ utah_unay/
 
 - [Arduino IDE](https://www.arduino.cc/en/software) with the [Earle Philhower RP2040 core](https://github.com/earlephilhower/arduino-pico) installed
 - Arduino libraries (all installable via Library Manager):
-  - `Adafruit BH1750`
+  - `hp_BH1750`
   - `Adafruit AHTX0`
-  - `Adafruit SSD1306`
+  - `Adafruit SH110x`
   - `Adafruit GFX Library`
-  - `SD` (built-in)
+  - `SdFat - Adafruit Fork`
+  - `Adafruit BusIO`
 - A web browser (for the graphing tool — no Python required)
 
 ---

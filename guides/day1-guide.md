@@ -46,7 +46,7 @@ Follow the Adafruit setup tutorial at **[learn.adafruit.com/adafruit-feather-rp2
 
 The built-in Blink example can't be edited directly. Open `CODE_1_blink` from the workshop sketches instead — it's the same sketch, but yours to modify. Find the two `delay()` calls and try changing the numbers. What happens when you make one value much larger than the other?
 
-> 📎 _[PLACEHOLDER — CODE_1 link or file path]_
+> 📎 **File → Examples → 01.Basics → Blink**, then **File → Save As** to make your own copy.
 
 ✅ **Checkpoint:** Your board's LED is blinking and you've changed the timing to see the effect.
 
@@ -78,7 +78,7 @@ Go to **Tools → Manage Libraries**, search for `Adafruit BH1750`, and install 
 
 Open `CODE_2_light_sensor` and upload it.
 
-> 📎 _[PLACEHOLDER — CODE_2 link or file path]_
+> 📎 **File → Examples → Adafruit BH1750 → BareMinimum**
 
 **Step 3 — Watch the data stream**
 
@@ -127,7 +127,7 @@ Go to **Tools → Manage Libraries**, search for `Adafruit AHTX0`, and install i
 
 Open `light_temp_humidity` and upload it. This sketch reads from both sensors and prints three values — lux, temperature, and humidity — on each line.
 
-> 📎 _[PLACEHOLDER — CODE_3 link or file path]_
+> 📎 [github.com/bweiss16/utah_unay/tree/main/sketches/light_temp_humidity](https://github.com/bweiss16/utah_unay/tree/main/sketches/light_temp_humidity)
 
 **Step 3 — Interact with the sensors**
 
@@ -167,7 +167,7 @@ Make sure the SD card is formatted as FAT32 with no old files on it. Slide it in
 
 Open `log` and upload it.
 
-> 📎 _[PLACEHOLDER — log sketch link or file path]_
+> 📎 [github.com/bweiss16/utah_unay/tree/main/sketches/log](https://github.com/bweiss16/utah_unay/tree/main/sketches/log)
 
 **Step 4 — Let it log**
 
@@ -239,4 +239,4 @@ Bring the logger back in. Remove the SD card, upload `log.csv` to the graphing t
 
 ---
 
-*Microcontrollers Workshop — Day 1 · Adafruit Feather RP2040 Adalogger · Arduino IDE*
+*Utah Unây Workshop — Day 1 · Adafruit Feather RP2040 Adalogger · Arduino IDE*

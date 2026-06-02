@@ -54,7 +54,7 @@ Upload it. The display should show a splash screen and some text. The A, B, and 
 
 Open `log_display` from the workshop sketches and upload it. This sketch reads all three sensors, displays live readings on the OLED, and continues logging data to the SD card simultaneously.
 
-> 📎 _[PLACEHOLDER — log_display sketch link or file path]_
+> 📎 [github.com/bweiss16/utah_unay/tree/main/sketches/log_display](https://github.com/bweiss16/utah_unay/tree/main/sketches/log_display)
 
 ✅ **Checkpoint:** The display shows three lines of live sensor data and updates every few seconds.
 
@@ -109,4 +109,4 @@ Let the system run for a minute, then remove the SD card and check that new rows
 
 ---
 
-*Microcontrollers Workshop — Day 2 · Adafruit Feather RP2040 Adalogger · Arduino IDE*
+*Utah Unây Workshop — Day 2 · Adafruit Feather RP2040 Adalogger · Arduino IDE*

@@ -119,7 +119,7 @@ void loop() {
   Serial.print("Sample: ");     Serial.print(sampleCount);
   Serial.print("  Lux: ");      Serial.print(lux, 1);
   Serial.print("  Temp: ");     Serial.print(tempC, 2);    Serial.print(" C");
-  Serial.print("  Humidity: "); Serial.print(humidity, 1); Serial.println(" %");
+  Serial.print("  Hum: ");      Serial.print(humidity, 1); Serial.println(" %");
 
   // Append CSV row to SD card
   if (sdReady) {
@@ -144,11 +144,13 @@ void loop() {
 
 // ── Draw live readings on the 128x64 OLED ────────────────────────────────────
 //
-//  y=0  : "LOGGER   #00001"
+// Default font: cursor Y is top-left, each row is 8px tall
+//
+//  y=0  : "LOGGER  #00001"
 //  y=9  : ────────────────
-//  y=13 : "Lux:  XXXXX.X"
-//  y=25 : "Temp: XX.XX C"
-//  y=37 : "RH:   XX.X %"
+//  y=13 : "Light: XXXXX.X"
+//  y=25 : "Temp:  XX.X C"
+//  y=37 : "Hum:   XX.X %"
 //  y=49 : ────────────────
 //  y=54 : "SD: OK" / "SD: NO CARD"
 //
@@ -157,9 +159,9 @@ void updateDisplay(float lux, float tempC, float humidity) {
   display.setTextSize(1);
   display.setTextColor(SH110X_WHITE);
 
-  // Title bar
+  // Title
   display.setCursor(0, 0);
-  display.print("LOGGER   #");
+  display.print("LOGGER  #");
   if (sampleCount < 10000) display.print("0");
   if (sampleCount < 1000)  display.print("0");
   if (sampleCount < 100)   display.print("0");
@@ -170,16 +172,16 @@ void updateDisplay(float lux, float tempC, float humidity) {
 
   // Sensor readings
   display.setCursor(0, 13);
-  display.print("Lux:  ");
+  display.print("Light: ");
   display.print(lux, 1);
 
   display.setCursor(0, 25);
-  display.print("Temp: ");
+  display.print("Temp:  ");
   display.print(tempC, 1);
   display.print(" C");
 
   display.setCursor(0, 37);
-  display.print("RH:   ");
+  display.print("Hum:   ");
   display.print(humidity, 1);
   display.print(" %");
 
@@ -199,9 +201,11 @@ void displayError(const char* msg) {
   display.setTextColor(SH110X_WHITE);
   display.setCursor(0, 0);
   display.println("ERROR:");
+  display.setCursor(0, 10);
   display.println(msg);
-  display.println("");
+  display.setCursor(0, 20);
   display.println("Check wiring");
+  display.setCursor(0, 30);
   display.println("and restart.");
   display.display();
 }
