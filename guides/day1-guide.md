@@ -42,9 +42,9 @@ Follow the Adafruit setup tutorial at **[learn.adafruit.com/adafruit-feather-rp2
 - [ ] F) Select port
 - [ ] G) Load the example Blink sketch
 
-**Step 2 — Upload CODE_1 and experiment with the timing**
+**Step 2 — Save a copy and experiment with the timing**
 
-The built-in Blink example can't be edited directly. Open `CODE_1_blink` from the workshop sketches instead — it's the same sketch, but yours to modify. Find the two `delay()` calls and try changing the numbers. What happens when you make one value much larger than the other?
+The built-in Blink example can't be edited directly. Go to **File → Save As** to save your own copy. Find the two `delay()` calls and try changing the numbers. What happens when you make one value much larger than the other?
 
 > 📎 **File → Examples → 01.Basics → Blink**, then **File → Save As** to make your own copy.
 
@@ -74,9 +74,9 @@ Go to **Tools → Manage Libraries**, search for `Adafruit BH1750`, and install 
 
 ✅ **Checkpoint:** The library is installed and visible under Sketch → Include Library.
 
-**Step 2 — Upload CODE_2**
+**Step 2 — Open and upload the BareMinimum example**
 
-Open `CODE_2_light_sensor` and upload it.
+Go to **File → Examples → Adafruit BH1750 → BareMinimum** and upload it.
 
 > 📎 **File → Examples → Adafruit BH1750 → BareMinimum**
 
@@ -123,7 +123,7 @@ Go to **Tools → Manage Libraries**, search for `Adafruit AHTX0`, and install i
 
 ✅ **Checkpoint:** The library is installed and visible under Sketch → Include Library.
 
-**Step 2 — Upload CODE_3**
+**Step 2 — Upload `light_temp_humidity`**
 
 Open `light_temp_humidity` and upload it. This sketch reads from both sensors and prints three values — lux, temperature, and humidity — on each line.
 
@@ -219,7 +219,7 @@ Remove the SD card, delete `log.csv` (or reformat), and reinsert it.
 
 Unplug the USB cable and connect the LiPo battery to the JST connector on the Feather. The board should restart and begin logging automatically.
 
-> ⚠️ Make sure CODE_4 is still uploaded — the board runs whatever sketch was last uploaded when it powers on.
+> ⚠️ Make sure `log` is still uploaded — the board runs whatever sketch was last uploaded when it powers on.
 
 ✅ **Checkpoint:** The board is running on battery and logging without a USB connection.
 

@@ -194,6 +194,7 @@
   <h1>Sensor Data Grapher</h1>
   <div class="label">Utah Unây Workshop<br>Adafruit Feather RP2040 Adalogger</div>
 </header>
+<div style="max-width:860px;margin:-16px auto 24px;"><a href="../index.html" style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#888;text-decoration:none;">← Utah Unây Workshop</a></div>
 
 <!-- ── Upload zone ── -->
 <section id="upload-section">
@@ -203,6 +204,7 @@
     <p>Drag and drop your file here, or click the button below.</p>
     <button class="btn" onclick="document.getElementById('file-input').click()">Choose File</button>
     <input type="file" id="file-input" accept=".csv">
+    <p style="margin-top:16px;font-size:12px;color:#999;">Don't have a file yet? <a href="#" onclick="loadSample(event)" style="color:#1a5c9e;">Try it with sample data</a></p>
   </div>
 </section>
 
@@ -250,6 +252,18 @@
 </section>
 
 <script>
+  // ── Load sample data ─────────────────────────────────────────────────────────
+  function loadSample(e) {
+    e.preventDefault();
+    fetch('sample_log.csv')
+      .then(r => r.text())
+      .then(text => {
+        const data = parseCSV(text);
+        renderResults('sample_log.csv', data);
+      })
+      .catch(() => alert('Could not load sample data.'));
+  }
+
   // ── File handling ────────────────────────────────────────────────────────────
   const dropZone   = document.getElementById('drop-zone');
   const fileInput  = document.getElementById('file-input');
