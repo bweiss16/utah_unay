@@ -16,6 +16,8 @@ venv/
 # Data files (SD card dumps — don't commit raw data)
 *.csv
 *.log
+# Exception: sample data for the graphing tool demo
+!graph/sample_log.csv
 
 # OS
 .DS_Store
