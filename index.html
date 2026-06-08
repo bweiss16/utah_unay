@@ -61,7 +61,7 @@
   /* ── Section labels ── */
   h2.section-label {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
+    font-size: 15px;
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -154,17 +154,16 @@
 <div class="container">
 
   <header>
-    <h1>Utah Unây Workshop<br><span style="font-weight:400;font-size:17px;color:#555">Microcontrollers &amp; Sensor Logging · 2026</span></h1>
-    <div class="label">Adafruit Feather RP2040 Adalogger<br>Arduino IDE</div>
+    <h1>Utah Unây Workshop<br><span style="font-weight:400;font-size:17px;color:#555">Robotics &amp; Traditional Ecological Knowledge · 2026</span></h1>
   </header>
 
   <div class="intro">
-    <strong>What we're building:</strong> A pocket-sized environmental data logger that measures light, temperature, and humidity, saves readings to an SD card, and runs on a battery in the field. Students build it from scratch over two days — one module at a time.
+    <strong>What we're building:</strong> An environmental data logger which measures light, temperature, and humidity. The system is battery powered and data is saved to an SD card.
   </div>
 
-  <!-- ── Student Resources ── -->
+  <!-- ── Resources ── -->
   <section>
-    <h2 class="section-label">Student Resources</h2>
+    <h2 class="section-label">Resources</h2>
     <div class="card-grid">
       <a class="card" href="guides/day1-guide.html">
         <span class="card-tag">Day 1 · Guide</span>
@@ -181,6 +180,13 @@
         <h3>Sensor Data Grapher</h3>
         <p>Upload your log.csv and see your sensor data plotted over time. Runs entirely in the browser.</p>
       </a>
+    </div>
+  </section>
+
+  <!-- ── Software ── -->
+  <section>
+    <h2 class="section-label">Software</h2>
+    <div class="card-grid">
       <a class="card" href="https://github.com/bweiss16/utah_unay/tree/main/sketches" target="_blank">
         <span class="card-tag">Code</span>
         <h3>Arduino Sketches</h3>
@@ -193,51 +199,61 @@
   <section>
     <h2 class="section-label">Hardware — Student Kit</h2>
     <table class="hw-table">
-      <tr><th>Item</th><th>Part</th><th>Purpose</th></tr>
+      <tr><th>Item</th><th>Link</th><th>Notes</th></tr>
       <tr>
         <td>Adafruit Feather RP2040 Adalogger</td>
-        <td><a href="https://www.adafruit.com/product/5359" target="_blank">#5359</a></td>
+        <td><a href="https://www.adafruit.com/product/5359" target="_blank">adafruit.com</a></td>
         <td>Main microcontroller + SD card slot</td>
       </tr>
       <tr>
-        <td>BH1750 Light Sensor</td>
-        <td><a href="https://www.adafruit.com/product/4681" target="_blank">#4681</a></td>
-        <td>Day 1 Module 2 — light sensing</td>
+        <td>Header Kit</td>
+        <td><a href="https://www.digikey.com/en/products/detail/adafruit-industries-llc/2886/5823440" target="_blank">digikey.com</a></td>
+        <td>Stacking headers for FeatherWing</td>
+      </tr>
+      <tr>
+        <td>USB-A to USB-C Cable</td>
+        <td><a href="https://www.adafruit.com/product/4472" target="_blank">adafruit.com</a></td>
+        <td>For programming and power</td>
+      </tr>
+      <tr>
+        <td>QT to QT Cable — 50mm (×2)</td>
+        <td><a href="https://www.adafruit.com/product/4399" target="_blank">adafruit.com</a></td>
+        <td>Solder-free I2C sensor connections</td>
       </tr>
       <tr>
         <td>AHT20 Temp &amp; Humidity Sensor</td>
-        <td><a href="https://www.adafruit.com/product/4566" target="_blank">#4566</a></td>
-        <td>Day 1 Module 3 — temperature &amp; humidity</td>
+        <td><a href="https://www.adafruit.com/product/4566" target="_blank">adafruit.com</a></td>
+        <td>Module 3 — temperature &amp; humidity</td>
+      </tr>
+      <tr>
+        <td>BH1750 Light Sensor</td>
+        <td><a href="https://www.adafruit.com/product/4681" target="_blank">adafruit.com</a></td>
+        <td>Module 2 — light sensing</td>
       </tr>
       <tr>
         <td>FeatherWing OLED 128×64</td>
-        <td><a href="https://www.adafruit.com/product/4650" target="_blank">#4650</a></td>
+        <td><a href="https://www.adafruit.com/product/4650" target="_blank">adafruit.com</a></td>
         <td>Day 2 — live display</td>
       </tr>
       <tr>
-        <td>Qwiic / STEMMA QT cables</td>
-        <td>—</td>
-        <td>Solder-free I2C connections</td>
-      </tr>
-      <tr>
-        <td>MicroSD card</td>
-        <td>—</td>
-        <td>Data logging</td>
-      </tr>
-      <tr>
-        <td>USB SD card reader</td>
-        <td>—</td>
-        <td>Transferring log.csv to computer</td>
-      </tr>
-      <tr>
-        <td>LiPo battery</td>
-        <td>—</td>
+        <td>LiPo Battery</td>
+        <td><a href="https://www.adafruit.com/product/2750" target="_blank">adafruit.com</a></td>
         <td>Portable deployment</td>
       </tr>
       <tr>
-        <td>Pelican case (small)</td>
-        <td>—</td>
+        <td>Pelican Waterproof Case</td>
+        <td><a href="https://www.pelican.com/us/en/product/cases/micro/1010?sku=1010-025-100" target="_blank">pelican.com</a></td>
         <td>Weatherproof enclosure for deployment</td>
+      </tr>
+      <tr>
+        <td>USB SD Card Reader</td>
+        <td><a href="https://www.amazon.com/acer-Adapter-MicroSD-Compatible-iPhone16/dp/B0DQ71G4G4/" target="_blank">amazon.com</a></td>
+        <td>Transferring log.csv to computer</td>
+      </tr>
+      <tr>
+        <td>128MB MicroSD Card</td>
+        <td><a href="https://www.amazon.com/Cloudisk-Micro-Memory-Adapter-Reader/dp/B0D2QBDJ5Y/ref=sr_1_3?crid=H3Y048JYLF4U&dib=eyJ2IjoiMSJ9.ydG0T1zXfAxFnDosuagm1xQp1JExy1bRnF5d8BGME58ut8j1RW15hXj5HfwhDUCigfZ62EVdZs7FGJac--i0gR3Eg7wg24OtsdYYFRWpPCdi7eu0TvCb2MaxsATrjw8Td17uf16rUKFCi4fsUARnW6Cl-3zgcGr8L5HwKLnXV3YL-ww07_eviGLD26uMv-FAz8VS4dGHnGzZGGayKorQVwSD_7FZAFy4KUmdcTs0eZSx9zAlM38eUZ0hqwx_lZjwU-NiQZz9xd1xGEXkgisW_7p8RX4CXLPwBLxzr-a2W7w.qZdMf7yoLldWcbAbOKTC8ym9l7Hv0eSmWIBhSadZaXo&dib_tag=se&keywords=Micro+SD+Card+pack+1+GB+10+pack&nsdOptOutParam=true&qid=1779464134&s=electronics&sprefix=micro+sd+card+pack+1+gb+10+pack,electronics,187&sr=1-3&th=1" target="_blank">amazon.com</a></td>
+        <td>Data logging — purchased as a set, not individually</td>
       </tr>
     </table>
   </section>

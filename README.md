@@ -112,4 +112,4 @@ To enable the workshop site, go to **Settings → Pages**, set the source branch
 - [ ] Note workflow nuances to call out explicitly — e.g. close Arduino IDE sketches you're not using, don't have multiple Serial Monitors open, etc.
 - [ ] Verify students can install Arduino IDE on the computers they'll be using (check IT restrictions on school laptops)
 - [ ] Edit materials for readability and student-appropriate language
-- [ ] Add a full BOM to the landing page with quantities, supplier links, and unit costs
+- [ ] Update landing page with final version of Process Agenda (replace DRAFT PDF)
