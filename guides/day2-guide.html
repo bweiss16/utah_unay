@@ -320,7 +320,7 @@
 
 <div class="doc-header">
   <h1>Adding a Live Display<br><span style="font-weight:400;font-size:15px;color:#555">Day 2 — Follow-Along Guide</span></h1>
-  <div class="label">Utah Unây Workshop<br>Adafruit Feather RP2040 Adalogger</div>
+  <div class="label">Utah Unây Workshop<br>Robotics + TEK</div>
 </div>
 
 <div class="intro">
@@ -383,7 +383,7 @@
       <div class="step-num">3</div>
       <div class="step-body">
         <h4>Run the Adafruit example sketch</h4>
-        <p>Before touching your logging code, confirm the display works on its own. Go to <strong>File → Examples → Adafruit SH110x</strong> and open <code>OLED_featherwing</code>.</p>
+        <p>Confirm the display works on its own. Plug your system back into your computer. Go to <strong>File → Examples → Adafruit SH110x</strong> and open <code>OLED_featherwing</code>.</p>
         <p>Upload it. The display should show a splash screen and some text. The A, B, and C buttons on the wing will print letters to the screen when pressed.</p>
         <div class="warn-box">If the display stays blank, check that the FeatherWing is fully seated on the headers. A partially connected pin is the most common cause.</div>
         <div class="checkpoint">The display is showing output from the Adafruit example. Remove and reseat the wing if it stays blank.</div>
@@ -399,9 +399,8 @@
       <div class="step-num">4</div>
       <div class="step-body">
         <h4>Upload <code>log_display</code></h4>
-        <p>Open the <code>log_display</code> sketch and upload it. It reads all three sensors, displays live readings on the OLED, and continues logging to the SD card simultaneously.</p>
-        <div class="info-box"><a href="https://github.com/bweiss16/utah_unay/tree/main/sketches/log_display" target="_blank">github.com/bweiss16/utah_unay/tree/main/sketches/log_display</a></div>
-        <div class="checkpoint">The display shows three lines of live sensor data and updates every few seconds.</div>
+        <p>Open the <code>log_display</code> sketch and upload it. It reads all three sensors, displays live readings on the OLED, and continues logging to the SD card simultaneously. The sketch can also be found <a href="https://github.com/bweiss16/utah_unay/tree/main/sketches/log_display" target="_blank">here</a>.</p>
+        <div class="checkpoint"> The display shows three lines of live sensor data and updates every few seconds.</div>
       </div>
     </div>
 
@@ -414,9 +413,9 @@
           <div class="screen-label">OLED display — 128×64px</div>
           LOGGER   #00042<br>
           &#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;<br>
-          Lux:  412.0<br>
-          Temp: 23.4 C<br>
-          RH:   58.2 %<br>
+          Light: 412.0<br>
+          Temp:  23.4 C<br>
+          Hum:   58.2 %<br>
           &#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;<br>
           SD: OK
         </div>
@@ -455,11 +454,6 @@
       <td>Unplug, remove the wing, and press it back on firmly. Check for bent pins.</td>
     </tr>
     <tr>
-      <td>Example works but <code>log_display</code> shows blank display</td>
-      <td>I2C address mismatch in the sketch</td>
-      <td>Run the I2C Scanner sketch (in the Day 2 reference guide) and confirm the display address. It should be <code>0x3C</code> or <code>0x3D</code>.</td>
-    </tr>
-    <tr>
       <td>Display shows data but one sensor reads 0 or NaN</td>
       <td>Qwiic cable came loose when attaching the wing</td>
       <td>Check that both Qwiic cables are still firmly seated on the sensor boards.</td>
@@ -476,16 +470,12 @@
     </tr>
   </table>
 
-  <div class="notes-box">
-    <div class="notes-label">Notes</div>
-  </div>
-
 </div>
 
 
 <div class="doc-footer">
   <span>Utah Unây Workshop — Day 2</span>
-  <span>Adafruit Feather RP2040 Adalogger · Arduino IDE</span>
+  <span>Robotics + TEK</span>
 </div>
 
 </body>

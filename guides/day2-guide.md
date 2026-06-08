@@ -52,7 +52,7 @@ Upload it. The display should show a splash screen and some text. The A, B, and 
 
 ### Step 4 — Upload `log_display`
 
-Open `log_display` from the workshop sketches and upload it. This sketch reads all three sensors, displays live readings on the OLED, and continues logging data to the SD card simultaneously.
+In the unzipped repo folder, go to `sketches → log_display` and open `log_display.ino`. Arduino IDE will open the sketch — upload it. It reads all three sensors, displays live readings on the OLED, and continues logging to the SD card simultaneously.
 
 > 📎 [github.com/bweiss16/utah_unay/tree/main/sketches/log_display](https://github.com/bweiss16/utah_unay/tree/main/sketches/log_display)
 
@@ -67,9 +67,9 @@ Your screen should look something like this:
 ```
 LOGGER   #00042
 ────────────────
-Lux:  412.0
-Temp: 23.4 C
-RH:   58.2 %
+Light: 412.0
+Temp:  23.4 C
+Hum:   58.2 %
 ────────────────
 SD: OK
 ```

@@ -7,20 +7,16 @@
 
 ## 🆘 If Your Board Stops Showing Up as a Port
 
-On the RP2040, the USB connection is managed by the microcontroller itself — not a separate chip. If a sketch crashes before USB initializes, the port disappears. This is normal and recoverable.
+On the RP2040, sometimes the USB connection looks like it's no longer functioning. If this happens, follow these steps to recover the connection.
 
-**To get your board back:**
-
-1. Hold the **BOOT** button on the board
-2. While holding BOOT, unplug and replug the USB cable
-3. Release BOOT — a drive called **RPI-RP2** should appear on your computer
-4. In Arduino IDE, open **File → Examples → 01.Basics → Blink**
-5. Select your board under **Tools → Board**
-6. Select the port under **Tools → Port** — it may appear as `UF2 Bootloader` or `RPI-RP2`
-7. Upload Blink — the board will reboot and the normal port will reappear
-8. You can now re-upload whichever sketch you were working on
-
-> 💡 If no port appears in step 6, go to **Sketch → Export Compiled Binary** while Blink is open, then drag the resulting `.uf2` file onto the RPI-RP2 drive.
+1. Unplug the USB cable from your computer
+2. Hold down the **BOOT** button on the board
+3. While pressing BOOT, plug the USB cable back in
+4. THEN release BOOT — a drive called **RPI-RP2** should appear on your computer
+5. Close the Arduino IDE and re-open it. You can either go back to the file you were working on OR open **File → Examples → 01.Basics → Blink**
+6. Select your board under **Tools → Board**
+7. Select the port under **Tools → Port** — it may appear as `UF2 Bootloader` or `RPI-RP2`
+8. Upload the code — the board will reboot and the normal port will reappear
 
 ---
 
@@ -34,11 +30,11 @@ Open a browser and go to: **[bweiss16.github.io/utah_unay](https://bweiss16.gith
 
 This is your home base for the workshop — it has links to both day guides, the graphing tool, and the hardware list. Keep this tab open.
 
-### Download the Example Sketches
+### Download the Workshop Repository
 
 **Step 1 — Download the workshop repository**
 
-On the workshop site, click the **Workshop Repository** card under Software. On the GitHub page that opens, click the green **Code** button and select **Download ZIP**. Save it somewhere you can find it — your Desktop works fine.
+On the workshop site, click the link next to the **SOFTWARE** heading, which will take you to the repository. On the GitHub page that opens, click the green **Code** button and select **Download ZIP**. Save it somewhere you can find it — your Desktop works fine.
 
 **Step 2 — Unzip the folder**
 
@@ -52,25 +48,27 @@ Your first program. You'll get the Arduino IDE talking to the Feather RP2040, up
 
 ### Steps
 
-**Step 1 — Set up Arduino IDE for the RP2040**
+**Step 1 — Set up Arduino IDE**
 
 Follow the Adafruit setup tutorial at **[learn.adafruit.com/adafruit-feather-rp2040-adalogger/arduino](https://learn.adafruit.com/adafruit-feather-rp2040-adalogger/arduino)** — work through each section in order:
 
-- [ ] A) Adding the Philhower Board Manager URL
-- [ ] B) Add Board Support Package
-- [ ] C) Choose Your Board
-- [ ] D) Go to next page by selecting "Arduino Usage"
-- [ ] E) Plug in your board
-- [ ] F) Select port
-- [ ] G) Load the example Blink sketch
+> ℹ️ If the IDE is already installed and your board has been added, skip to step 4.
 
-**Step 2 — Save a copy and experiment with the timing**
+- [ ] 1) Add the Philhower Board Manager URL
+- [ ] 2) Add Board Support Package
+- [ ] 3) Choose Your Board
+- [ ] 4) Go to next page by selecting [Arduino Usage](https://learn.adafruit.com/adafruit-feather-rp2040-adalogger/arduino-usage). You can ignore the first section titled "RP2040 Arduino Pins" and begin with "Choose Your Board" on that page.
+- [ ] 5) Select your board in the IDE and plug it in. Continue following the tutorial from here.
+- [ ] 6) Select port
+- [ ] 7) Load the example Blink sketch
 
-The built-in Blink example can't be edited directly. Go to **File → Save As** to save your own copy. Find the two `delay()` calls and try changing the numbers. What happens when you make one value much larger than the other?
+Do you see the LED on your board blinking? If not, try to figure out what went wrong!
 
-> 📎 **File → Examples → 01.Basics → Blink**, then **File → Save As** to make your own copy.
+**Step 2 — Edit the code and experiment with timing**
 
-✅ **Checkpoint:** Your board's LED is blinking and you've changed the timing to see the effect.
+Find the two places in the code where the `delay()` function is used. Try changing the numbers. What happens when you make one value much larger than the other? What does each number control?
+
+✅ **Checkpoint:** Move on if your board's LED is blinking and you understand what each `delay()` is doing.
 
 ---
 
@@ -92,15 +90,13 @@ Plug one end of a Qwiic/STEMMA QT cable into the port on your Feather and the ot
 
 **Step 1 — Install the BH1750 library**
 
-Go to **Tools → Manage Libraries**, search for `Adafruit BH1750`, and install it. Install any dependencies when prompted.
+Go to **Tools → Manage Libraries**, search for `hp_BH1750`, and install it. Install any dependencies when prompted.
 
 ✅ **Checkpoint:** The library is installed and visible under Sketch → Include Library.
 
 **Step 2 — Open and upload the BareMinimum example**
 
-Go to **File → Examples → Adafruit BH1750 → BareMinimum** and upload it.
-
-> 📎 **File → Examples → Adafruit BH1750 → BareMinimum**
+Go to **File → Examples**, scroll down until you see **hp_BH1750**, and open the **BareMinimum** example. Upload it.
 
 **Step 3 — Watch the data stream**
 
@@ -147,7 +143,7 @@ Go to **Tools → Manage Libraries**, search for `Adafruit AHTX0`, and install i
 
 **Step 2 — Upload `light_temp_humidity`**
 
-Open `light_temp_humidity` and upload it. This sketch reads from both sensors and prints three values — lux, temperature, and humidity — on each line.
+In the unzipped repo folder, go to `sketches → light_temp_humidity` and open `light_temp_humidity.ino`. Arduino IDE will open the sketch — upload it. This sketch reads from both sensors and prints three values — lux, temperature, and humidity — on each line.
 
 > 📎 [github.com/bweiss16/utah_unay/tree/main/sketches/light_temp_humidity](https://github.com/bweiss16/utah_unay/tree/main/sketches/light_temp_humidity)
 
@@ -171,55 +167,82 @@ Right now, all your data disappears the moment you unplug the USB cable. In this
 
 Your sketch will open a file on the SD card and append a new row every few seconds. The file is saved as a **CSV** (comma-separated values) — a simple text format that any graphing tool can read. Each row will contain a reading count, lux, temperature, and humidity.
 
+### Prepare the SD Card
+
+**Step 1 — Insert the SD card into the USB reader**
+
+Slide the microSD card into the USB card reader and plug it into your computer. It should appear as a drive — like a USB flash drive. Open it to confirm it's readable.
+
+> SD cards store files just like a USB drive or your computer's hard drive. The logger will create a file called `log.csv` on the card and write a new row of sensor data to it every second.
+
+**Step 2 — Format the card and eject it**
+
+Delete any existing files on the card, then format it as **FAT32**. On Windows: right-click the drive → **Format** → set File System to **FAT32** → click Start. On Mac: open **Disk Utility**, select the card, click **Erase**, and choose **MS-DOS (FAT)**.
+
+When done, eject the card safely before removing it — always eject before pulling it out to avoid corrupting your data.
+
+> ⚠️ Get into this habit now: every time you finish a logging session, delete `log.csv` from the card before starting a new one. If you don't, new data gets appended to the old file and your graph will show mixed datasets.
+
+✅ **Checkpoint:** The card is formatted, empty, and safely ejected.
+
+**Step 3 — Insert the card into the Feather**
+
+Remove the card from the USB reader and slide it into the slot on the underside of the Feather until it clicks.
+
 ### Steps
 
-**Step 1 — Install the SD library**
+**Step 4 — Install the SD library**
 
 Go to **Tools → Manage Libraries**, search for `SdFat - Adafruit Fork`, and install it. Install any dependencies when prompted.
 
 ✅ **Checkpoint:** The library is installed and visible under Sketch → Include Library.
 
-**Step 2 — Insert the SD card**
+**Step 5 — Upload `log`**
 
-Make sure the SD card is formatted as FAT32 with no old files on it. Slide it into the slot on the underside of the Feather until it clicks.
-
-> ⚠️ If there's an old `log.csv` on the card, delete it before starting to avoid mixing datasets.
-
-**Step 3 — Upload `log`**
-
-Open `log` and upload it.
+In the unzipped repo folder, go to `sketches → log` and open `log.ino`. Select your board and port again if needed, then upload the sketch.
 
 > 📎 [github.com/bweiss16/utah_unay/tree/main/sketches/log](https://github.com/bweiss16/utah_unay/tree/main/sketches/log)
 
-**Step 4 — Let it log**
+**Step 6 — Let it log**
 
 Open the Serial Monitor. You should see a new row printing every few seconds, each confirming a successful write to the SD card. Let it run for at least 3 minutes.
 
 ✅ **Checkpoint:** The Serial Monitor is showing a new row every few seconds confirming SD card writes.
 
-**Step 5 — Retrieve the data**
-
-Unplug the board. Remove the SD card, insert it into the USB card reader, and plug the reader into your computer. Open `log.csv` — you should see a table of readings.
-
-✅ **Checkpoint:** You can open `log.csv` and see rows of real sensor data.
-
 ---
 
 ## Module 5 — Visualizing Data
 
-Numbers in a CSV file are hard to interpret at a glance. In this module you'll upload your data to a graphing tool and see all three sensor channels plotted over time.
+Numbers in a CSV file are hard to interpret at a glance. In this module you'll retrieve your data, take a look at the raw file, then upload it to a graphing tool to see all three sensor channels plotted over time.
 
 ### Steps
 
-**Step 1 — Open the graphing tool**
+**Step 1 — Retrieve the data**
 
-In a browser, navigate to: **[bweiss16.github.io/utah_unay/graph](https://bweiss16.github.io/utah_unay/graph)**
+Unplug the board. Remove the SD card and insert it into the USB card reader, then plug the reader into your computer. The card will appear as a drive — open it and confirm `log.csv` is there.
 
-**Step 2 — Upload your CSV**
+✅ **Checkpoint:** You can see `log.csv` on the SD card.
 
-Click **Upload CSV** and select your `log.csv` file. The tool will plot lux, temperature, and humidity over time.
+**Step 2 — Open the raw file**
 
-**Step 3 — Read your data**
+Before graphing, take a look at the data in its raw form:
+
+- **Windows:** right-click `log.csv` → **Open with → Notepad**. You'll see plain text with values separated by commas — one row per reading.
+- **Mac:** right-click `log.csv` → **Open with → TextEdit**. Same thing — rows of comma-separated values.
+
+If you have Excel or Numbers available, you can open it there too and it will automatically split the columns into a table.
+
+✅ **Checkpoint:** You can see rows of sensor readings in the raw file.
+
+**Step 3 — Open the graphing tool**
+
+Go to the workshop site at **[bweiss16.github.io/utah_unay](https://bweiss16.github.io/utah_unay)** and click the **Sensor Data Grapher** card under Resources.
+
+**Step 4 — Upload your CSV**
+
+Click **Choose File** and select your `log.csv` file. The tool will plot lux, temperature, and humidity over time.
+
+**Step 5 — Read your data**
 
 Can you spot moments where you covered the light sensor? Where you breathed on the humidity sensor?
 

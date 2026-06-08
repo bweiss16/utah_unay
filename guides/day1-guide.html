@@ -320,8 +320,7 @@
       <div class="step-num">2</div>
       <div class="step-body">
         <h4>Upload <code>light_temp_humidity</code></h4>
-        <p>Open <code>light_temp_humidity</code> and upload it. This sketch reads from both sensors and prints three values — lux, temperature, and humidity — to the Serial Monitor on each line.</p>
-        <div class="info-box"><a href="https://github.com/bweiss16/utah_unay/tree/main/sketches/light_temp_humidity" target="_blank">github.com/bweiss16/utah_unay/tree/main/sketches/light_temp_humidity</a></div>
+        <p>In the unzipped repo folder called <code>utah_unay</code>, go to <code>sketches → light_temp_humidity</code> and double click <code>light_temp_humidity.ino</code> to open it. Select your board and port again if needed, then upload the sketch. This sketch reads from both sensors and prints three values — lux, temperature, and humidity</p>
       </div>
     </div>
 
@@ -374,7 +373,7 @@
       <div class="step-body">
         <h4>Insert the SD card</h4>
         <p>Make sure the SD card is formatted as FAT32 and has no old files on it. Slide it into the slot on the underside of the Feather until it clicks.</p>
-        <div class="warn-box">If there are old files on the SD card, delete them before starting. A leftover <code>log.csv</code> from a previous session will have your new data appended to the end, which can cause confusion when graphing.</div>
+        <div class="warn-box">If there are old files on the SD card, delete them before starting. A leftover log.csv from a previous session will have your new data appended to the end, which can cause confusion when graphing.</div>
       </div>
     </div>
 
@@ -382,8 +381,7 @@
       <div class="step-num">3</div>
       <div class="step-body">
         <h4>Upload <code>log</code></h4>
-        <p>Open the <code>log</code> sketch and upload it. It reads from both sensors and writes a new row to <code>log.csv</code> on the SD card every second. Each row is also printed to the Serial Monitor so you can confirm it's working.</p>
-        <div class="info-box"><a href="https://github.com/bweiss16/utah_unay/tree/main/sketches/log" target="_blank">github.com/bweiss16/utah_unay/tree/main/sketches/log</a></div>
+        <p>In the unzipped repo folder called <code>utah_unay</code>, go to <code>sketches → log</code> and double click <code>log.ino</code> to open it. Select your board and port again if needed, then upload the sketch. This reads from both sensors and writes a new row to log.csv on the SD card every second.
       </div>
     </div>
 
@@ -393,15 +391,6 @@
         <h4>Let it log</h4>
         <p>Open the Serial Monitor. You should see rows of data printing, each one confirming a successful write to the SD card. Let it run for at least 3 minutes — longer if you want more data to graph.</p>
         <div class="checkpoint">The Serial Monitor is showing a new row every few seconds, each one confirming a successful SD card write.</div>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-num">5</div>
-      <div class="step-body">
-        <h4>Retrieve the data</h4>
-        <p>Unplug the board. Remove the SD card and insert it into the USB SD card reader, then plug the reader into your computer. Open the <code>log.csv</code> file — you should see a table of readings.</p>
-        <div class="checkpoint">You can open <code>log.csv</code> and see rows of real sensor data.</div>
       </div>
     </div>
 
@@ -418,7 +407,7 @@
     <h2>Visualizing Data</h2>
   </div>
   <hr class="module-divider">
-  <p class="module-intro">Numbers in a CSV file are hard to interpret at a glance. In this module you'll upload your data to a graphing tool and see all three sensor channels plotted over time.</p>
+  <p class="module-intro">Numbers in a CSV file are hard to interpret at a glance. In this module you'll retrieve your data, take a look at the raw file, then upload it to a graphing tool to see all three sensor channels plotted over time.</p>
 
   <h3 class="section-label">Steps</h3>
   <div class="steps">
@@ -426,22 +415,44 @@
     <div class="step">
       <div class="step-num">1</div>
       <div class="step-body">
-        <h4>Open the graphing tool</h4>
-        <p>In a browser, navigate to the workshop graphing tool:</p>
-        <div class="info-box"><a href="https://bweiss16.github.io/utah_unay/graph" target="_blank">bweiss16.github.io/utah_unay/graph</a></div>
+        <h4>Retrieve the data</h4>
+        <p>Unplug the board. Remove the SD card and insert it into the USB card reader, then plug the reader into your computer. The card will appear as a drive — open it and confirm <code>log.csv</code> is there.</p>
+        <div class="checkpoint">You can see <code>log.csv</code> on the SD card.</div>
       </div>
     </div>
 
     <div class="step">
       <div class="step-num">2</div>
       <div class="step-body">
-        <h4>Upload your CSV</h4>
-        <p>Click <strong>Upload CSV</strong> and select your <code>log.csv</code> file. The tool will plot all three channels — lux, temperature, and humidity — on a graph.</p>
+        <h4>Open the raw file</h4>
+        <p>Before graphing, take a look at the data in its raw form:</p>
+        <ul>
+          <li><strong>Windows:</strong> right-click <code>log.csv</code> → <strong>Open with → Notepad</strong>. You'll see plain text with values separated by commas — one row per reading.</li>
+          <li><strong>Mac:</strong> right-click <code>log.csv</code> → <strong>Open with → TextEdit</strong>. Same thing — rows of comma-separated values.</li>
+        </ul>
+        <p>If you have Excel or Numbers available, you can open it there too and it will automatically split the columns into a table.</p>
+        <div class="checkpoint">You can see rows of sensor readings in the raw file.</div>
       </div>
     </div>
 
     <div class="step">
       <div class="step-num">3</div>
+      <div class="step-body">
+        <h4>Open the graphing tool</h4>
+        <p>Go to the workshop site at <a href="https://bweiss16.github.io/utah_unay" target="_blank">bweiss16.github.io/utah_unay</a> and click the <strong>Sensor Data Grapher</strong> card under Resources.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h4>Upload your CSV</h4>
+        <p>Click <strong>Choose File</strong> and select your <code>log.csv</code> file or you can drop the <code>log.csv</code> directly onto the window. The tool will plot all three channels — lux, temperature, and humidity — on a graph.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">5</div>
       <div class="step-body">
         <h4>Read your data</h4>
         <p>Look at the graph and see if you can spot any patterns. Can you identify moments where you covered the light sensor? Where you breathed on the humidity sensor?</p>
@@ -471,7 +482,7 @@
       <div class="step-num">1</div>
       <div class="step-body">
         <h4>Prepare a fresh SD card</h4>
-        <p>Remove the SD card, delete <code>log.csv</code> (or reformat the card), and reinsert it. Your deployment will start with a clean dataset.</p>
+        <p>Remove the SD card from the RP2040, insert it into the USB reader and delete <code>log.csv</code>. Make sure to eject the SD card before removing the USB. Then, reinsert it into the RP2040. This will ensure that your log.csv only contains data from your real deployment.</p>
       </div>
     </div>
 
@@ -479,8 +490,8 @@
       <div class="step-num">2</div>
       <div class="step-body">
         <h4>Switch to battery power</h4>
-        <p>Unplug the USB cable and connect the LiPo battery to the JST connector on the Feather. The board should restart and begin logging automatically.</p>
-        <div class="warn-box">Make sure <code>log</code> is still uploaded — the board will run whatever sketch was last uploaded when it powers on.</div>
+        <p>Unplug the USB cable from the computer. Connect the LiPo battery to the JST connector on the Feather. The board should restart, the lights on your sensors should turn on, and the system will begin logging automatically. To make sure it is working, plug the USB back into your computer and verify that you see a datastream.</p>
+        <p>Once you've verified this, unplug the USB from both the computer and the RP2040.</p>
         <div class="checkpoint">The board is running on battery and logging without a USB connection.</div>
       </div>
     </div>
@@ -496,8 +507,8 @@
     <div class="step">
       <div class="step-num">4</div>
       <div class="step-body">
-        <h4>Deploy outside</h4>
-        <p>Take your logger outside and place it somewhere interesting — in the sun, in the shade, on the ground. Leave it for at least 10 minutes.</p>
+        <h4>Deploy</h4>
+        <p>Take your logger to your study site and place it somewhere interesting — in the sun, in the shade, on the ground. Somewhere you think that temperature, light or humidity might be changing. Leave it for at least 10 minutes.</p>
       </div>
     </div>
 
@@ -505,7 +516,7 @@
       <div class="step-num">5</div>
       <div class="step-body">
         <h4>Retrieve and graph your data</h4>
-        <p>Bring the logger back in. Remove the SD card, upload <code>log.csv</code> to the graphing tool, and look at what you captured. Can you see the difference between sun and shade? Did the temperature change while it was outside?</p>
+        <p>Bring the logger back in. Unplug the battery, remove the SD card, upload <code>log.csv</code> to the graphing tool. Next, we will discuss how to interpret the data.</p>
         <div class="checkpoint">You have a graph showing real environmental data from your outdoor deployment.</div>
       </div>
     </div>
@@ -516,7 +527,7 @@
 
 <div class="doc-footer">
   <span>Utah Unây Workshop — Day 1</span>
-  <span>Adafruit Feather RP2040 Adalogger · Arduino IDE</span>
+  <span>Robotics + TEK</span>
 </div>
 
 </body>
