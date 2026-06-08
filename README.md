@@ -113,3 +113,4 @@ To enable the workshop site, go to **Settings → Pages**, set the source branch
 - [ ] Verify students can install Arduino IDE on the computers they'll be using (check IT restrictions on school laptops)
 - [ ] Edit materials for readability and student-appropriate language
 - [ ] Update landing page with final version of Process Agenda (replace DRAFT PDF)
+- [ ] Before workshop: uninstall sensor libraries (hp_BH1750, Adafruit AHTX0, Adafruit SH110x, Adafruit GFX) so the projected screen matches what students see when installing fresh

@@ -5,7 +5,7 @@
 
 ---
 
-## Add the OLED Display
+## Module 1 — Add the OLED Display
 
 The FeatherWing OLED snaps directly onto your Feather board — no wiring needed. It communicates over I2C, the same bus your sensors are already using, so adding it is mostly a software task.
 

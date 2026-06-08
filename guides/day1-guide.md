@@ -24,6 +24,28 @@ On the RP2040, the USB connection is managed by the microcontroller itself — n
 
 ---
 
+## Accessing Materials and Example Code
+
+All guides, tools, and code for this workshop live in one place. Take a minute to get everything downloaded before we start.
+
+### Workshop Site
+
+Open a browser and go to: **[bweiss16.github.io/utah_unay](https://bweiss16.github.io/utah_unay)**
+
+This is your home base for the workshop — it has links to both day guides, the graphing tool, and the hardware list. Keep this tab open.
+
+### Download the Example Sketches
+
+**Step 1 — Download the workshop repository**
+
+On the workshop site, click the **Workshop Repository** card under Software. On the GitHub page that opens, click the green **Code** button and select **Download ZIP**. Save it somewhere you can find it — your Desktop works fine.
+
+**Step 2 — Unzip the folder**
+
+Find the downloaded ZIP file and extract it. Inside you'll find a `sketches/` folder — that's where all the Arduino code for today and tomorrow lives. You won't need it until Module 3, but it's good to have it ready.
+
+---
+
 ## Module 1 — Blink an LED
 
 Your first program. You'll get the Arduino IDE talking to the Feather RP2040, upload a sketch, and make the board's built-in LED blink. This confirms everything is set up correctly before you add any sensors.

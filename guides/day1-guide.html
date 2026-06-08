@@ -49,9 +49,11 @@
   .intro strong { color: var(--accent); }
 
   .module { margin-top: 44px; }
+  .module + .module { margin-top: 56px; padding-top: 40px; border-top: 2px solid var(--rule); }
+
   .module-header { display: flex; align-items: center; gap: 14px; margin-bottom: 10px; }
-  .module-num { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600; background: var(--ink); color: white; padding: 3px 8px; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; }
-  .module-header h2 { font-size: 17px; font-weight: 600; letter-spacing: -0.2px; border: none; padding: 0; margin: 0; color: var(--ink); text-transform: none; }
+  .module-num { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 600; background: var(--ink); color: white; padding: 5px 12px; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; }
+  .module-header h2 { font-size: 22px; font-weight: 600; letter-spacing: -0.3px; border: none; padding: 0; margin: 0; color: var(--ink); text-transform: none; }
   .module-divider { border: none; border-top: 1px solid var(--rule); margin-bottom: 18px; }
   .module-intro { font-size: 13px; color: var(--muted); margin-bottom: 18px; font-style: italic; }
 
@@ -107,26 +109,37 @@
 
 
 <!-- ═══════════════════════════════════════════
-     RECOVERY BOX
+     ACCESSING MATERIALS
 ════════════════════════════════════════════ -->
-<div class="module" style="border: 2px solid #c0392b; border-radius: 4px; padding: 18px 22px; margin-top: 32px; background: #fff8f7;">
+<div class="module">
   <div class="module-header">
-    <span class="module-num" style="background:#c0392b;">🆘 Recovery</span>
-    <h2 style="color:#c0392b;">If Your Board Stops Showing Up as a Port</h2>
+    <span class="module-num" style="background:var(--accent);">Before You Begin</span>
+    <h2>Accessing Materials and Example Code</h2>
   </div>
-  <hr class="module-divider">
-  <p style="font-size:13px; margin-bottom:10px;">On the RP2040, the USB connection is managed by the microcontroller itself — not a separate chip. If a sketch crashes before USB initializes, the port disappears. This is normal and recoverable.</p>
-  <ol style="font-size:13px; margin-left:18px; line-height:2;">
-    <li>Hold the <strong>BOOT</strong> button on the board</li>
-    <li>While holding BOOT, unplug and replug the USB cable</li>
-    <li>Release BOOT — a drive called <strong>RPI-RP2</strong> should appear on your computer</li>
-    <li>In Arduino IDE, open <strong>File → Examples → 01.Basics → Blink</strong></li>
-    <li>Select your board under <strong>Tools → Board</strong></li>
-    <li>Select the port under <strong>Tools → Port</strong> — it may appear as <code>UF2 Bootloader</code> or <code>RPI-RP2</code></li>
-    <li>Upload Blink — the board will reboot and the normal port will reappear</li>
-    <li>You can now re-upload whichever sketch you were working on</li>
-  </ol>
-  <div class="info-box" style="margin-top:12px;">If no port appears in step 6, go to <strong>Sketch → Export Compiled Binary</strong> while Blink is open, then drag the resulting <code>.uf2</code> file onto the RPI-RP2 drive.</div>
+  <h3 class="section-label">Workshop Site</h3>
+  <p style="font-size:13px;margin-bottom:8px">Open a browser and go to: <a href="https://bweiss16.github.io/utah_unay" target="_blank">bweiss16.github.io/utah_unay</a></p>
+  <p style="font-size:13px;margin-top:10px;">This is your home base for the workshop — it has links to guides for Day 1 and Day 2, the graphing tool, and the hardware list. Keep this tab open.</p>
+
+  <h3 class="section-label">Download the Workshop Repository</h3>
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h4>Download the workshop repository and sample code</h4>
+        <p>On the workshop site, click the link next to the SOFTWARE heading, which will take you to the repository (<a href="https://github.com/bweiss16/utah_unay" target="_blank">https://github.com/bweiss16/utah_unay</a>). On the GitHub page that opens, click the green <strong>Code</strong> button and select <strong>Download ZIP</strong>. Save it somewhere you can find it — your Desktop works fine.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h4>Unzip the folder</h4>
+        <p>Find the downloaded ZIP file and extract it. Inside you'll find a <code>sketches/</code> folder — that's where all the Arduino code for today and tomorrow lives. You won't need it until Module 3, but it's good to have it ready.</p>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 
@@ -141,37 +154,60 @@
   <hr class="module-divider">
   <p class="module-intro">Your first program. You'll get the Arduino IDE talking to the Feather RP2040, upload a sketch, and make the board's built-in LED blink. This confirms everything is set up correctly before you add any sensors.</p>
 
-  <h3 class="section-label">Steps</h3>
+  <h3 class="section-label">Firmware</h3>
   <div class="steps">
 
     <div class="step">
       <div class="step-num">1</div>
       <div class="step-body">
-        <h4>Set up Arduino IDE for the RP2040</h4>
-        <p>Follow the Adafruit setup tutorial — work through each section in order:</p>
-        <div class="info-box"><a href="https://learn.adafruit.com/adafruit-feather-rp2040-adalogger/arduino" target="_blank">learn.adafruit.com/adafruit-feather-rp2040-adalogger/arduino</a></div>
+        <h4>Set up Arduino IDE</h4>
+        <p>Follow the Adafruit setup tutorial — work through each section in order: <a href="https://learn.adafruit.com/adafruit-feather-rp2040-adalogger/arduino" target="_blank">learn.adafruit.com/adafruit-feather-rp2040-adalogger/arduino</a> </p>
+        <div class="info-box">NOTE: if the IDE is already installed and your board has been added, skip to step 4</div>
         <ul style="margin: 10px 0 8px 0; list-style: none; padding: 0; font-size: 13px;">
-          <li style="margin-bottom:5px"><input type="checkbox"> &nbsp;A) Adding the Philhower Board Manager URL</li>
-          <li style="margin-bottom:5px"><input type="checkbox"> &nbsp;B) Add Board Support Package</li>
-          <li style="margin-bottom:5px"><input type="checkbox"> &nbsp;C) Choose Your Board</li>
-          <li style="margin-bottom:5px"><input type="checkbox"> &nbsp;D) Go to next page by selecting "Arduino Usage"</li>
-          <li style="margin-bottom:5px"><input type="checkbox"> &nbsp;E) Plug in your board</li>
-          <li style="margin-bottom:5px"><input type="checkbox"> &nbsp;F) Select port</li>
-          <li style="margin-bottom:5px"><input type="checkbox"> &nbsp;G) Load the example Blink sketch</li>
+          <li style="margin-bottom:5px"><input type="checkbox"> &nbsp;1) Add the Philhower Board Manager URL</li>
+          <li style="margin-bottom:5px"><input type="checkbox"> &nbsp;2) Add Board Support Package</li>
+          <li style="margin-bottom:5px"><input type="checkbox"> &nbsp;3) Choose Your Board</li>
+          <li style="margin-bottom:5px"><input type="checkbox"> &nbsp;4) Go to next page by selecting <a href="https://learn.adafruit.com/adafruit-feather-rp2040-adalogger/arduino-usage">Arduino Usage</a> at the bottom. You can ignore that first section titled "RP2040 Arduino Pins" and instead begin with "Choose Your Board" on that page.</li>
+          <li style="margin-bottom:5px"><input type="checkbox"> &nbsp;5) Select your board in the IDE and plug it in. Continue following the tutorial from here</li>
+          <li style="margin-bottom:5px"><input type="checkbox"> &nbsp;6) Select port</li>
+          <li style="margin-bottom:5px"><input type="checkbox"> &nbsp;7) Load the example Blink sketch</li>
         </ul>
+        <p>Do you see the LED on your board blinking? If not, try to figure out what went wrong!</p>
       </div>
     </div>
 
     <div class="step">
       <div class="step-num">2</div>
       <div class="step-body">
-        <h4>Save a copy and experiment with the timing</h4>
-        <p>The built-in Blink example can't be edited directly. Go to <strong>File → Save As</strong> to save your own copy. Find the two <code>delay()</code> calls and try changing the numbers. What happens when you make one value much larger than the other?</p>
-        <div class="checkpoint">Your board's LED is blinking and you've changed the timing to see the effect.</div>
+        <h4>Edit the code and experiment with timing</h4>
+        <p>Find the two places in the code where the <code>delay()</code> function is used. Try changing the numbers inside of the function clal. What happens when you make one value much larger than the other? How does this effect the blinking patern? What does each of the numbers control</p>
+        <div class="checkpoint">Move on if: your board's LED is blinking and you understand what each delay() is doing.</div>
       </div>
     </div>
 
   </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     RECOVERY BOX
+════════════════════════════════════════════ -->
+<div class="module" style="border: 2px solid #c0392b; border-radius: 4px; padding: 18px 22px; margin-top: 32px; background: #fff8f7;">
+  <div class="module-header">
+    <span class="module-num" style="background:#c0392b;">🆘 Recovery</span>
+    <h2 style="color:#c0392b;">If Your Board Stops Showing Up as a Port</h2>
+  </div>
+  <hr class="module-divider">
+  <p style="font-size:13px; margin-bottom:10px;">On the RP2040, sometimes, the USB connection looks like it's no longer functioning. If this happens, follow these steps to recover the conection.</p>
+  <ol style="font-size:13px; margin-left:18px; line-height:2;">
+    <li>unplug the USB cable from your computer</li>
+    <li>Hold down the <strong>BOOT</strong> button on the board</li>
+    <li>While pressing BOOT, plug the USB cable back in</li>
+    <li>THEN, release BOOT — a drive called <strong>RPI-RP2</strong> should appear on your computer</li>
+    <li>Close the Arduino IDE and re-open it. You can either go back to the file you were working on OR <strong>File → Examples → 01.Basics → Blink</strong></li>
+    <li>Select your board under <strong>Tools → Board</strong></li>
+    <li>Select the port under <strong>Tools → Port</strong> — it may appear as <code>UF2 Bootloader</code> or <code>RPI-RP2</code></li>
+    <li>Upload the code — the board will reboot and the normal port will reappear</li>
+  </ol>
 </div>
 
 
@@ -184,14 +220,13 @@
     <h2>Sensing Light</h2>
   </div>
   <hr class="module-divider">
-  <p class="module-intro">Your first sensor. The BH1750 measures ambient light and reports the value directly in lux — the standard unit for light intensity. You'll connect it via a Qwiic cable, install its library, and watch the data stream live.</p>
+  <p class="module-intro">Time to integrate your first sensor! The BH1750 measures ambient light. You'll connect it via a Qwiic cable, install its library, and watch the data stream live.</p>
 
   <h3 class="section-label">Concept</h3>
   <p style="font-size:13px;margin-bottom:8px">The BH1750 communicates over <strong>I2C</strong> — a protocol that lets a microcontroller talk to sensors using just two wires: one for data (<code>SDA</code>) and one for a clock signal (<code>SCL</code>). The Feather RP2040 Adalogger has a STEMMA QT port that exposes these pins via a small JST connector, so no individual wires are needed at all.</p>
 
   <h3 class="section-label">Wiring</h3>
-  <p style="font-size:13px;margin-bottom:8px">Plug one end of a Qwiic/STEMMA QT cable into the port on your Feather and the other end into either port on the BH1750 breakout. That's it — all four connections (power, ground, SDA, SCL) are made by the cable.</p>
-  <div class="warn-box">Make sure the board is unplugged from USB before connecting the cable. Connect USB again once the cable is in place.</div>
+  <p style="font-size:13px;margin-bottom:8px">Disconnect your RP2040 from your laptop. Plug one end of a Qwiic/STEMMA QT cable into the port on your Feather and the other end into either port on the BH1750 breakout. That's it — all four connections (power, ground, SDA, SCL) are made by the cable.</p>
 
   <h3 class="section-label">Install the Library</h3>
   <div class="steps">
@@ -200,8 +235,8 @@
       <div class="step-num">1</div>
       <div class="step-body">
         <h4>Install the BH1750 library</h4>
-        <p>Go to <strong>Tools → Manage Libraries</strong>, search for <code>Adafruit BH1750</code>, and install it. Install any dependencies when prompted.</p>
-        <div class="checkpoint">The library is installed and visible under Sketch → Include Library.</div>
+        <p>In the Arduino IDE, go to <strong>Tools → Manage Libraries</strong>, search for <code>hp_BH1750</code>, and install it. Install any dependencies when prompted.</p>
+        <div class="checkpoint">The library is installed and visible under Sketch → Include Library. You may have to scroll way down.</div>
       </div>
     </div>
 
@@ -214,8 +249,7 @@
       <div class="step-num">2</div>
       <div class="step-body">
         <h4>Open and upload the BareMinimum example</h4>
-        <p>Go to <strong>File → Examples → Adafruit BH1750 → BareMinimum</strong> and upload it. This sketch reads lux values from the BH1750 and prints them to the Serial Monitor.</p>
-        <div class="info-box"><strong>File → Examples → Adafruit BH1750 → BareMinimum</strong></div>
+        <p>Go to <strong>File → Examples</strong> Scroll down until you see <strong>hp_BH1750</strong>. Select this and open the <strong>BareMinimum</strong> example and upload. This sketch reads light levels from the BH1750 and prints 
       </div>
     </div>
 
@@ -223,7 +257,7 @@
       <div class="step-num">3</div>
       <div class="step-body">
         <h4>Watch the data stream</h4>
-        <p>Go to <strong>Tools → Serial Monitor</strong>. Make sure the baud rate dropdown at the bottom right matches the value in the sketch. You should see lux values scrolling. Cover the sensor with your hand and watch the number drop.</p>
+        <p>Go to <strong>Tools → Serial Monitor</strong>. Make sure the baud rate dropdown at the bottom right is set to 9600. You should see values scrolling in the monitor. See what happens when you slowly cover the sensor with your hand.</p>
         <div class="checkpoint">Lux values are printing in the Serial Monitor and change when you cover the sensor.</div>
       </div>
     </div>
@@ -232,7 +266,7 @@
       <div class="step-num">4</div>
       <div class="step-body">
         <h4>Try the Serial Plotter</h4>
-        <p>Close the Serial Monitor and open <strong>Tools → Serial Plotter</strong>. You'll see the lux value as a live graph. Wave your hand over the sensor and watch the line respond.</p>
+        <p>Go to <strong>Tools → Serial Plotter</strong>. You should see the light value as a live graph. Wave your hand over the sensor and watch the line respond.</p>
         <div class="checkpoint">You can see the live graph reacting to changes in light level.</div>
       </div>
     </div>
@@ -256,7 +290,7 @@
   <p style="font-size:13px;margin-bottom:8px">The Feather's STEMMA QT port and the BH1750 breakout each have <strong>two</strong> Qwiic connectors — one in, one out. This lets you chain sensors together in a line. Each sensor has a unique I2C address so the microcontroller can tell them apart, even though they share the same wires.</p>
 
   <h3 class="section-label">Wiring</h3>
-  <p style="font-size:13px;margin-bottom:8px">Plug a second Qwiic cable into the unused port on the BH1750 and connect the other end to either port on the AHT20. Your chain should look like:</p>
+  <p style="font-size:13px;margin-bottom:8px">First, disconnect your RP2040 from your computer's USB. Plug a second Qwiic cable into the unused port on the BH1750 and connect the other end to either port on the AHT20. Your chain should look like:</p>
   <p style="font-family:'IBM Plex Mono',monospace;font-size:12px;background:var(--code-bg);padding:10px 14px;border-radius:3px;margin-bottom:8px;">Feather RP2040 → BH1750 → AHT20</p>
 
   <table class="wiring-table">

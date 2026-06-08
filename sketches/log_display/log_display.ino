@@ -1,3 +1,5 @@
+#include <hp_BH1750.h>
+
 /*
  * log_display
  * Reads lux, temperature, and humidity once per second, logs each
