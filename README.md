@@ -1,12 +1,15 @@
 # Utah Unây Workshop 2026
 
-A weekend introduction to microcontrollers and sensor logging for high school students. Students build a working environmental data logger from scratch using an Adafruit Feather RP2040 Adalogger, I2C sensors, and an SD card.
+A weekend workshop for high school students that brings together Traditional Ecological Knowledge (TEK) and Robotics to observe and understand the natural world. Students build a working environmental data logger — measuring light, temperature, and humidity — as a hands-on entry point into microcontroller programming and environmental sensing. The workshop is grounded in Two-Eyed Seeing: the practice of holding Indigenous and Western ways of knowing side by side, each strengthening the other. See the "Process Agenda" below for the schedule, which also contains more information about the TEK modules.
+
+This repository contains guides and example sketches used for the microcontroller modules. The website linked below is a landing page for participants, whereas the repository is intended to help facilitators manage all workshop materials.
+
 
 🌐 **Workshop site:** [bweiss16.github.io/utah_unay](https://bweiss16.github.io/utah_unay)
 
 ---
 
-## Workshop Overview
+## Microcontroller Modules Overview
 
 ### Day 1 — Guided Build
 
@@ -17,7 +20,7 @@ Students work through six modules, ending with a deployed sensor system sealed i
 | 1 | **Blink an LED** | Set up Arduino IDE for the RP2040, open built-in Blink example, experiment with delay timing |
 | 2 | **Sensing Light** | Connect BH1750 via Qwiic, install library, open BareMinimum example, Serial Monitor + Serial Plotter |
 | 3 | **Sensing Temperature & Humidity** | Daisy-chain AHT20 after BH1750, verify with AHT20 example, upload `light_temp_humidity` |
-| 4 | **Data Logging** | Insert SD card, upload `log`, log data for a few minutes, retrieve `log.csv` via SD card reader |
+| 4 | **Data Logging** | Format SD card as FAT32, install SdFat library, upload `log`, log data for a few minutes, retrieve `log.csv` via SD card reader |
 | 5 | **Visualizing Data** | Upload `log.csv` to the web graphing tool, view plotted sensor data |
 | 6 | **Deployment** | Place system in Pelican case, go outside and deploy |
 
@@ -42,7 +45,7 @@ Each student kit contains:
 
 | Item | Part | Purpose |
 |------|------|---------|
-| Adafruit Feather RP2040 Adalogger | [#5359](https://www.adafruit.com/product/5359) | Main microcontroller + SD card |
+| Adafruit Feather RP2040 Adalogger | [#5980](https://www.adafruit.com/product/5980) | Main microcontroller + SD card |
 | BH1750 Light Sensor | [#4681](https://www.adafruit.com/product/4681) | Module 2 — light sensing |
 | AHT20 Temp & Humidity Sensor | [#4566](https://www.adafruit.com/product/4566) | Module 3 — temperature & humidity |
 | FeatherWing OLED 128x64 | [#4650](https://www.adafruit.com/product/4650) | Day 2 — live display |
@@ -99,18 +102,9 @@ No software installation required — the tool runs entirely in the browser.
 
 ---
 
-## GitHub Pages Setup
-
-To enable the workshop site, go to **Settings → Pages**, set the source branch to `main` and the folder to `/ (root)`, and save. The site will be live at `https://bweiss16.github.io/utah_unay` within a minute or two.
-
----
-
 ## To Do
 
-- [ ] Proofread both guides end-to-end
-- [ ] Generate PDFs of guides with version numbers
-- [ ] Note workflow nuances to call out explicitly — e.g. close Arduino IDE sketches you're not using, don't have multiple Serial Monitors open, etc.
-- [ ] Verify students can install Arduino IDE on the computers they'll be using (check IT restrictions on school laptops)
-- [ ] Edit materials for readability and student-appropriate language
 - [ ] Update landing page with final version of Process Agenda (replace DRAFT PDF)
 - [ ] Before workshop: uninstall sensor libraries (hp_BH1750, Adafruit AHTX0, Adafruit SH110x, Adafruit GFX) so the projected screen matches what students see when installing fresh
+- [ ] Test latest firmware (6/12/2026)
+- [ ] Print hard copies of guides
