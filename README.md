@@ -110,3 +110,11 @@ No software installation required — the tool runs entirely in the browser.
 - [ ] Before workshop: uninstall sensor libraries (hp_BH1750, Adafruit AHTX0, Adafruit SH110x, Adafruit GFX) so the projected screen matches what students see when installing fresh
 - [ ] Test latest firmware (6/12/2026)
 - [ ] Print hard copies of guides
+
+## To Do — 2027
+
+- [ ] Make Serial Monitor/Plotter icon references consistent across all modules (currently only Module 2 specifies the toolbar icons)
+- [ ] Add a troubleshooting section to the Day 1 guide (SD card not recognized, sensor errors, etc.)
+- [ ] Flesh out Module 6 (Deployment) — suggested deployment duration, what patterns to look for when graphing afterward
+- [ ] Add a facilitator note for students who fall behind on the "Before You Begin" / repo download step
+- [ ] Clarify whether students keep their loggers — affects how they think about naming and deployment
