@@ -118,7 +118,6 @@ Let the system run for a minute, then remove the SD card and check that new rows
 | Display stays completely blank | FeatherWing not fully seated | Unplug, remove the wing, and press it back on firmly. Check for bent pins. |
 | Example works but `log_display` shows blank | I2C address mismatch | Run the I2C Scanner sketch and confirm the display address — should be `0x3C` or `0x3D`. |
 | One sensor reads 0 or NaN | Qwiic cable came loose when attaching wing | Check that both Qwiic cables are still firmly seated. |
-| SD card stopped logging | SD not initialized before display in sketch | Check the Serial Monitor for errors. SD must be initialized in `setup()` before the display. |
 | Board won't upload | Wrong board selected | Confirm Tools → Board is set to **Adafruit Feather RP2040 Adalogger**. |
 
 ---

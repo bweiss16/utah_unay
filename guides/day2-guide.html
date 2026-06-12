@@ -316,6 +316,7 @@
     .warn-box { page-break-inside: avoid; }
     .info-box { page-break-inside: avoid; }
     .notes-box { page-break-inside: avoid; }
+    .screen-diagram { font-size: 10px; padding: 12px 16px; line-height: 1.6; }
     a, a:visited { color: var(--accent) !important; }
   }
 </style>
@@ -472,11 +473,6 @@
       <td>Display shows data but one sensor reads 0 or NaN</td>
       <td>Qwiic cable came loose when attaching the wing</td>
       <td>Check that both Qwiic cables are still firmly seated on the sensor boards.</td>
-    </tr>
-    <tr>
-      <td>SD card stopped logging after adding display</td>
-      <td>Sketch not initializing SD card before display</td>
-      <td>Check the Serial Monitor for error messages. SD must be initialized in <code>setup()</code> before the display.</td>
     </tr>
     <tr>
       <td>Sketch compiles but board won't upload</td>

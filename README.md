@@ -32,10 +32,10 @@ Students add the Adafruit FeatherWing OLED 128x64 display to their logger. They'
 
 ## Student Guides
 
-| Guide | Rendered | Markdown |
-|-------|----------|----------|
-| Day 1 — Building a Sensor Logger | [View](https://bweiss16.github.io/utah_unay/guides/day1-guide.html) | [guides/day1-guide.md](guides/day1-guide.md) |
-| Day 2 — Adding the Display | [View](https://bweiss16.github.io/utah_unay/guides/day2-guide.html) | [guides/day2-guide.md](guides/day2-guide.md) |
+| Guide | Rendered | Markdown | PDF |
+|-------|----------|----------|-----|
+| Day 1 — Building a Sensor Logger | [View](https://bweiss16.github.io/utah_unay/guides/day1-guide.html) | [guides/day1-guide.md](guides/day1-guide.md) | [uu_workshop_day1_v1.pdf](guides/uu_workshop_day1_v1.pdf) |
+| Day 2 — Adding the Display | [View](https://bweiss16.github.io/utah_unay/guides/day2-guide.html) | [guides/day2-guide.md](guides/day2-guide.md) | [uu_workshop_day2_v1.pdf](guides/uu_workshop_day2_v1.pdf) |
 
 ---
 
@@ -45,15 +45,17 @@ Each student kit contains:
 
 | Item | Part | Purpose |
 |------|------|---------|
-| Adafruit Feather RP2040 Adalogger | [#5980](https://www.adafruit.com/product/5980) | Main microcontroller + SD card |
-| BH1750 Light Sensor | [#4681](https://www.adafruit.com/product/4681) | Module 2 — light sensing |
-| AHT20 Temp & Humidity Sensor | [#4566](https://www.adafruit.com/product/4566) | Module 3 — temperature & humidity |
-| FeatherWing OLED 128x64 | [#4650](https://www.adafruit.com/product/4650) | Day 2 — live display |
-| Qwiic/STEMMA QT cables | — | Solder-free I2C connections |
-| MicroSD card | — | Data logging |
-| USB SD card reader | — | Transferring log.csv to computer |
-| LiPo battery | — | Portable deployment |
-| Pelican case (small) | — | Weatherproof enclosure for deployment |
+| Adafruit Feather RP2040 Adalogger | [adafruit.com](https://www.adafruit.com/product/5980) | Main microcontroller + SD card slot |
+| Header Kit | [digikey.com](https://www.digikey.com/en/products/detail/adafruit-industries-llc/2886/5823440) | Stacking headers for FeatherWing |
+| USB-A to USB-C Cable | [adafruit.com](https://www.adafruit.com/product/4472) | For programming and power |
+| QT to QT Cable — 50mm (×2) | [adafruit.com](https://www.adafruit.com/product/4399) | Solder-free I2C sensor connections |
+| AHT20 Temp & Humidity Sensor | [adafruit.com](https://www.adafruit.com/product/4566) | Module 3 — temperature & humidity |
+| BH1750 Light Sensor | [adafruit.com](https://www.adafruit.com/product/4681) | Module 2 — light sensing |
+| FeatherWing OLED 128×64 | [adafruit.com](https://www.adafruit.com/product/4650) | Day 2 — live display |
+| LiPo Battery | [adafruit.com](https://www.adafruit.com/product/2750) | Portable deployment |
+| Pelican Waterproof Case | [pelican.com](https://www.pelican.com/us/en/product/cases/micro/1010?sku=1010-025-100) | Weatherproof enclosure for deployment |
+| USB SD Card Reader | [amazon.com](https://www.amazon.com/acer-Adapter-MicroSD-Compatible-iPhone16/dp/B0DQ71G4G4/) | Transferring log.csv to computer |
+| 128MB MicroSD Card | [amazon.com](https://www.amazon.com/Cloudisk-Micro-Memory-Adapter-Reader/dp/B0D2QBDJ5Y/) | Data logging |
 
 ---
 
