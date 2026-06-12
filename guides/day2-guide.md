@@ -60,7 +60,21 @@ In the unzipped repo folder, go to `sketches → log_display` and open `log_disp
 
 ---
 
-### Step 5 — Verify the display output
+### Step 5 — Customize your logger name
+
+Near the top of `log_display.ino`, find this line:
+
+```cpp
+const char* LOGGER_NAME = "LOGGER";
+```
+
+Change `"LOGGER"` to whatever you want — your name, your project name, a location, anything. Keep it short (8–10 characters) so it fits on the screen without overlapping the sample counter. Upload the sketch again and check that your name appears on the display.
+
+✅ **Checkpoint:** Your custom name is showing in the top-left of the display.
+
+---
+
+### Step 6 — Verify the display output
 
 Your screen should look something like this:
 
@@ -68,7 +82,7 @@ Your screen should look something like this:
 LOGGER   #00042
 ────────────────
 Light: 412.0
-Temp:  23.4 C
+Temp:  74.1 F
 Hum:   58.2 %
 ────────────────
 SD: OK
@@ -84,7 +98,7 @@ Try interacting with your sensors and watch the values update:
 
 ---
 
-### Step 6 — Verify logging is still working
+### Step 7 — Verify logging is still working
 
 Let the system run for a minute, then remove the SD card and check that new rows are still being written to `log.csv`. The display and logging should be running simultaneously.
 

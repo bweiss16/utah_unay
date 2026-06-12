@@ -407,6 +407,17 @@
     <div class="step">
       <div class="step-num">5</div>
       <div class="step-body">
+        <h4>Customize your logger name</h4>
+        <p>Near the top of <code>log_display.ino</code>, find this line:</p>
+        <pre style="font-family:'IBM Plex Mono',monospace;font-size:12px;background:var(--code-bg);padding:10px 14px;border-radius:3px;margin:8px 0;">const char* LOGGER_NAME = "LOGGER";</pre>
+        <p>Change <code>"LOGGER"</code> to whatever you want — your name, your project name, a location, anything. Keep it short (8–10 characters) so it fits on the screen without overlapping the sample counter. Upload the sketch again and check that your name appears on the display.</p>
+        <div class="checkpoint">Your custom name is showing in the top-left of the display.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-body">
         <h4>Verify the display output</h4>
         <p>Your screen should look something like this:</p>
         <div class="screen-diagram">
@@ -414,7 +425,7 @@
           LOGGER   #00042<br>
           &#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;<br>
           Light: 412.0<br>
-          Temp:  23.4 C<br>
+          Temp:  74.1 F<br>
           Hum:   58.2 %<br>
           &#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;<br>
           SD: OK
@@ -430,7 +441,7 @@
     </div>
 
     <div class="step">
-      <div class="step-num">6</div>
+      <div class="step-num">7</div>
       <div class="step-body">
         <h4>Verify logging is still working</h4>
         <p>Let the system run for a minute, then remove the SD card and check that new rows are still being written to <code>log.csv</code>. The display and logging should be running simultaneously.</p>

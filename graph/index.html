@@ -238,7 +238,7 @@
     <canvas id="chart-lux" height="140"></canvas>
   </div>
   <div class="chart-card temp">
-    <h3>Temperature (°C)</h3>
+    <h3>Temperature (°F)</h3>
     <canvas id="chart-temp" height="140"></canvas>
   </div>
   <div class="chart-card hum">
@@ -316,11 +316,11 @@
     const iSample = header.indexOf('sample');
     const iMillis = header.indexOf('millis');
     const iLux    = header.indexOf('lux');
-    const iTemp   = header.indexOf('temp_c');
+    const iTemp   = header.indexOf('temp_f');
     const iHum    = header.indexOf('humidity_pct');
 
     if (iLux < 0 || iTemp < 0 || iHum < 0) {
-      throw new Error('Expected columns lux, temp_C, humidity_pct — is this a log.csv from the workshop?');
+      throw new Error('Expected columns lux, temp_F, humidity_pct — is this a log.csv from the workshop?');
     }
 
     const rows = [];
@@ -368,7 +368,7 @@
     const sHum  = stats(humVals);
 
     document.getElementById('stat-lux-avg').textContent  = 'average: ' + sLux.avg.toFixed(1)  + ' lux';
-    document.getElementById('stat-temp-avg').textContent = 'average: ' + sTemp.avg.toFixed(1) + ' °C';
+    document.getElementById('stat-temp-avg').textContent = 'average: ' + sTemp.avg.toFixed(1) + ' °F';
     document.getElementById('stat-hum-avg').textContent  = 'average: ' + sHum.avg.toFixed(1)  + ' %';
 
     document.getElementById('stat-lux-range').innerHTML  =
@@ -434,7 +434,7 @@
     }
 
     makeChart('chart-lux',  '#e6a817', 'lux',  luxVals);
-    makeChart('chart-temp', '#c0392b', '°C',   tempVals);
+    makeChart('chart-temp', '#c0392b', '°F',   tempVals);
     makeChart('chart-hum',  '#1a7a4a', '%RH',  humVals);
   }
 </script>

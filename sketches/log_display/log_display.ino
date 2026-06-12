@@ -43,6 +43,9 @@ const char* LOG_FILENAME = "log.csv";
 hp_BH1750      lightMeter;
 Adafruit_AHTX0 aht20;
 
+// ── Customize your logger name ────────────────────────────────────────────────
+const char* LOGGER_NAME = "LOGGER";
+
 // ── State ─────────────────────────────────────────────────────────────────────
 unsigned long sampleCount = 0;
 bool sdReady = false;
@@ -91,7 +94,7 @@ void setup() {
     if (!SD.exists(LOG_FILENAME)) {
       FsFile f = SD.open(LOG_FILENAME, FILE_WRITE);
       if (f) {
-        f.println("sample,millis,lux,temp_C,humidity_pct");
+        f.println("sample,millis,lux,temp_F,humidity_pct");
         f.close();
       }
     }
@@ -114,13 +117,13 @@ void loop() {
   // Read AHT20
   sensors_event_t humidityEvent, tempEvent;
   aht20.getEvent(&humidityEvent, &tempEvent);
-  float tempC    = tempEvent.temperature;
+  float tempF    = (tempEvent.temperature * 9.0 / 5.0) + 32.0;
   float humidity = humidityEvent.relative_humidity;
 
   // Human-readable Serial output
   Serial.print("Sample: ");     Serial.print(sampleCount);
   Serial.print("  Lux: ");      Serial.print(lux, 1);
-  Serial.print("  Temp: ");     Serial.print(tempC, 2);    Serial.print(" C");
+  Serial.print("  Temp: ");     Serial.print(tempF, 2);    Serial.print(" F");
   Serial.print("  Hum: ");      Serial.print(humidity, 1); Serial.println(" %");
 
   // Append CSV row to SD card
@@ -130,7 +133,7 @@ void loop() {
       f.print(sampleCount);  f.print(",");
       f.print(t);            f.print(",");
       f.print(lux, 1);       f.print(",");
-      f.print(tempC, 2);     f.print(",");
+      f.print(tempF, 2);     f.print(",");
       f.println(humidity, 1);
       f.close();
     } else {
@@ -139,36 +142,38 @@ void loop() {
   }
 
   // Update display
-  updateDisplay(lux, tempC, humidity);
+  updateDisplay(lux, tempF, humidity);
 
   delay(1000);
 }
 
 // ── Draw live readings on the 128x64 OLED ────────────────────────────────────
 //
-// Default font: cursor Y is top-left, each row is 8px tall
+// Default font: cursor Y is top-left, each character is 6px wide, 8px tall
 //
-//  y=0  : "LOGGER  #00001"
-//  y=9  : ────────────────
+//  y=0  : "LOGGER_NAME"  (left)    "#00001" (right)
+//  y=9  : ────────────────────────────────────────
 //  y=13 : "Light: XXXXX.X"
-//  y=25 : "Temp:  XX.X C"
+//  y=25 : "Temp:  XX.X F"
 //  y=37 : "Hum:   XX.X %"
-//  y=49 : ────────────────
+//  y=49 : ────────────────────────────────────────
 //  y=54 : "SD: OK" / "SD: NO CARD"
 //
-void updateDisplay(float lux, float tempC, float humidity) {
+void updateDisplay(float lux, float tempF, float humidity) {
   display.clearDisplay();
   display.setTextSize(1);
   display.setTextColor(SH110X_WHITE);
 
-  // Title
+  // Title: name left-aligned, sample count right-aligned
   display.setCursor(0, 0);
-  display.print("LOGGER  #");
-  if (sampleCount < 10000) display.print("0");
-  if (sampleCount < 1000)  display.print("0");
-  if (sampleCount < 100)   display.print("0");
-  if (sampleCount < 10)    display.print("0");
-  display.print(sampleCount);
+  display.print(LOGGER_NAME);
+
+  // Build zero-padded sample string and right-align it (6px per char, display 128px wide)
+  char sampleStr[8];
+  snprintf(sampleStr, sizeof(sampleStr), "#%05lu", sampleCount);
+  int16_t sx = 128 - (int16_t)(strlen(sampleStr) * 6);
+  display.setCursor(sx, 0);
+  display.print(sampleStr);
 
   display.drawFastHLine(0, 9, 128, SH110X_WHITE);
 
@@ -179,8 +184,8 @@ void updateDisplay(float lux, float tempC, float humidity) {
 
   display.setCursor(0, 25);
   display.print("Temp:  ");
-  display.print(tempC, 1);
-  display.print(" C");
+  display.print(tempF, 1);
+  display.print(" F");
 
   display.setCursor(0, 37);
   display.print("Hum:   ");

@@ -127,7 +127,7 @@
       <div class="step-num">1</div>
       <div class="step-body">
         <h4>Download the workshop repository and sample code</h4>
-        <p>On the workshop site, click the link next to the SOFTWARE heading, which will take you to the repository (<a href="https://github.com/bweiss16/utah_unay" target="_blank">https://github.com/bweiss16/utah_unay</a>). On the GitHub page that opens, click the green <strong>Code</strong> button and select <strong>Download ZIP</strong>. Save it somewhere you can find it — your Desktop works fine.</p>
+        <p>Open the Github repository (<a href="https://github.com/bweiss16/utah_unay" target="_blank">https://github.com/bweiss16/utah_unay</a>). Click the green <strong>Code</strong> button and select <strong>Download ZIP</strong>. Save it to your Desktop.</p>
       </div>
     </div>
 
@@ -160,27 +160,26 @@
     <div class="step">
       <div class="step-num">1</div>
       <div class="step-body">
-        <h4>Set up Arduino IDE</h4>
-        <p>Follow the Adafruit setup tutorial — work through each section in order: <a href="https://learn.adafruit.com/adafruit-feather-rp2040-adalogger/arduino" target="_blank">learn.adafruit.com/adafruit-feather-rp2040-adalogger/arduino</a> </p>
-        <div class="info-box">NOTE: if the IDE is already installed and your board has been added, skip to step 4</div>
-        <ul style="margin: 10px 0 8px 0; list-style: none; padding: 0; font-size: 13px;">
-          <li style="margin-bottom:5px"><input type="checkbox"> &nbsp;1) Add the Philhower Board Manager URL</li>
-          <li style="margin-bottom:5px"><input type="checkbox"> &nbsp;2) Add Board Support Package</li>
-          <li style="margin-bottom:5px"><input type="checkbox"> &nbsp;3) Choose Your Board</li>
-          <li style="margin-bottom:5px"><input type="checkbox"> &nbsp;4) Go to next page by selecting <a href="https://learn.adafruit.com/adafruit-feather-rp2040-adalogger/arduino-usage">Arduino Usage</a> at the bottom. You can ignore that first section titled "RP2040 Arduino Pins" and instead begin with "Choose Your Board" on that page.</li>
-          <li style="margin-bottom:5px"><input type="checkbox"> &nbsp;5) Select your board in the IDE and plug it in. Continue following the tutorial from here</li>
-          <li style="margin-bottom:5px"><input type="checkbox"> &nbsp;6) Select port</li>
-          <li style="margin-bottom:5px"><input type="checkbox"> &nbsp;7) Load the example Blink sketch</li>
-        </ul>
-        <p>Do you see the LED on your board blinking? If not, try to figure out what went wrong!</p>
+        <h4>Set up the Arduino IDE</h4>
+        <div class="info-box">If the IDE is already installed and your board has been added, skip to step 2.</div>
+        <p style="margin-top:10px;">Follow the Adafruit setup tutorial at <a href="https://learn.adafruit.com/adafruit-feather-rp2040-adalogger/arduino" target="_blank">learn.adafruit.com/adafruit-feather-rp2040-adalogger/arduino</a> and work through each section until your board is set up.</p>
       </div>
     </div>
 
     <div class="step">
       <div class="step-num">2</div>
       <div class="step-body">
+        <h4>Upload and run Blink code</h4>
+        <p>Follow the steps at <a href="https://learn.adafruit.com/adafruit-feather-rp2040-adalogger/arduino-usage" target="_blank">learn.adafruit.com/adafruit-feather-rp2040-adalogger/arduino-usage</a>. After you select your board and port, you should see <strong>Adafruit Feather RP2040 Adalogger</strong> in bold at the top of the window. After you upload the Blink code, you should see the LED on your board start blinking. If not, try to figure out what went wrong!</p>
+        <div class="warn-box">When selecting your board, make sure the name matches exactly: "Adafruit Feather RP2040 Adalogger". Do not select "Adafruit Feather RP2040" — it looks similar but is a different board and will cause problems.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
         <h4>Edit the code and experiment with timing</h4>
-        <p>Find the two places in the code where the <code>delay()</code> function is used. Try changing the numbers inside of the function clal. What happens when you make one value much larger than the other? How does this effect the blinking patern? What does each of the numbers control</p>
+        <p>Find the two places in the code where the <code>delay()</code> function is used. Try changing the numbers. What happens when you make one value much larger than the other? What does each number control?</p>
         <div class="checkpoint">Move on if: your board's LED is blinking and you understand what each delay() is doing.</div>
       </div>
     </div>
@@ -226,7 +225,7 @@
   <p style="font-size:13px;margin-bottom:8px">The BH1750 communicates over <strong>I2C</strong> — a protocol that lets a microcontroller talk to sensors using just two wires: one for data (<code>SDA</code>) and one for a clock signal (<code>SCL</code>). The Feather RP2040 Adalogger has a STEMMA QT port that exposes these pins via a small JST connector, so no individual wires are needed at all.</p>
 
   <h3 class="section-label">Wiring</h3>
-  <p style="font-size:13px;margin-bottom:8px">Disconnect your RP2040 from your laptop. Plug one end of a Qwiic/STEMMA QT cable into the port on your Feather and the other end into either port on the BH1750 breakout. That's it — all four connections (power, ground, SDA, SCL) are made by the cable.</p>
+  <p style="font-size:13px;margin-bottom:8px">Disconnect your RP2040 from your laptop. Plug one end of a Qwiic/STEMMA QT cable into the port on your Feather and the other end into either port on the BH1750 breakout. That's it — all four connections (power, ground, SDA, SCL) are made by the cable. Plug the RP2040 back into your computer.</p>
 
   <h3 class="section-label">Install the Library</h3>
   <div class="steps">
@@ -257,7 +256,7 @@
       <div class="step-num">3</div>
       <div class="step-body">
         <h4>Watch the data stream</h4>
-        <p>Go to <strong>Tools → Serial Monitor</strong>. Make sure the baud rate dropdown at the bottom right is set to 9600. You should see values scrolling in the monitor. See what happens when you slowly cover the sensor with your hand.</p>
+        <p>Click the <strong>magnifying glass icon</strong> in the top-right corner of the Arduino IDE to open the Serial Monitor. Make sure the baud rate dropdown at the bottom right is set to 9600. You should see values scrolling in the monitor. See what happens when you slowly cover the sensor with your hand.</p>
         <div class="checkpoint">Lux values are printing in the Serial Monitor and change when you cover the sensor.</div>
       </div>
     </div>
@@ -266,7 +265,7 @@
       <div class="step-num">4</div>
       <div class="step-body">
         <h4>Try the Serial Plotter</h4>
-        <p>Go to <strong>Tools → Serial Plotter</strong>. You should see the light value as a live graph. Wave your hand over the sensor and watch the line respond.</p>
+        <p>Click the <strong>squiggle icon</strong> in the top-right corner of the Arduino IDE to open the Serial Plotter. You should see the light value as a live graph. Wave your hand over the sensor and watch the line respond.</p>
         <div class="checkpoint">You can see the live graph reacting to changes in light level.</div>
       </div>
     </div>
@@ -291,13 +290,7 @@
 
   <h3 class="section-label">Wiring</h3>
   <p style="font-size:13px;margin-bottom:8px">First, disconnect your RP2040 from your computer's USB. Plug a second Qwiic cable into the unused port on the BH1750 and connect the other end to either port on the AHT20. Your chain should look like:</p>
-  <p style="font-family:'IBM Plex Mono',monospace;font-size:12px;background:var(--code-bg);padding:10px 14px;border-radius:3px;margin-bottom:8px;">Feather RP2040 → BH1750 → AHT20</p>
-
-  <table class="wiring-table">
-    <tr><th>Sensor</th><th>I2C Address</th><th>What it measures</th></tr>
-    <tr><td>BH1750</td><td><code>0x23</code></td><td>Light (lux)</td></tr>
-    <tr><td>AHT20</td><td><code>0x38</code></td><td>Temperature (°C) &amp; humidity (%RH)</td></tr>
-  </table>
+  <p style="font-family:'IBM Plex Mono',monospace;font-size:12px;background:var(--code-bg);padding:10px 14px;border-radius:3px;margin-bottom:8px;">Feather RP2040 → BH1750 → AHT20.</p> <p>Plug your RP2040 back into your computer.</p>
 
   <h3 class="section-label">Install the Library</h3>
   <div class="steps">
@@ -362,6 +355,20 @@
     <div class="step">
       <div class="step-num">1</div>
       <div class="step-body">
+        <h4>Format the SD card</h4>
+        <p>The SD card must be formatted as <strong>FAT32</strong> before the logger can write to it. Insert the card into the USB card reader and plug it into your computer.</p>
+        <ul style="margin: 8px 0 8px 0; padding-left: 18px; font-size: 13px; line-height: 1.8;">
+          <li><strong>Windows:</strong> Open File Explorer, right-click the card's drive, and select <strong>Format</strong>. Set the file system to <strong>FAT32</strong> and click <strong>Start</strong>.</li>
+          <li><strong>Mac:</strong> Open <strong>Disk Utility</strong> (search for it in Spotlight). Select the SD card in the left panel, click <strong>Erase</strong>, choose <strong>MS-DOS (FAT)</strong> as the format, and click <strong>Erase</strong>.</li>
+        </ul>
+        <p>Once formatting is complete, eject the card and remove it from the reader.</p>
+        <div class="checkpoint">The SD card is formatted as FAT32 and ejected from the reader.</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
         <h4>Install the SD library</h4>
         <p>Go to <strong>Tools → Manage Libraries</strong>, search for <code>SdFat - Adafruit Fork</code>, and install it. Install any dependencies when prompted.</p>
         <div class="checkpoint">The library is installed and visible under Sketch → Include Library.</div>
@@ -369,16 +376,15 @@
     </div>
 
     <div class="step">
-      <div class="step-num">2</div>
+      <div class="step-num">3</div>
       <div class="step-body">
         <h4>Insert the SD card</h4>
-        <p>Make sure the SD card is formatted as FAT32 and has no old files on it. Slide it into the slot on the underside of the Feather until it clicks.</p>
-        <div class="warn-box">If there are old files on the SD card, delete them before starting. A leftover log.csv from a previous session will have your new data appended to the end, which can cause confusion when graphing.</div>
+        <p>Slide the card into the slot on the underside of the Feather until it clicks.</p>
       </div>
     </div>
 
     <div class="step">
-      <div class="step-num">3</div>
+      <div class="step-num">4</div>
       <div class="step-body">
         <h4>Upload <code>log</code></h4>
         <p>In the unzipped repo folder called <code>utah_unay</code>, go to <code>sketches → log</code> and double click <code>log.ino</code> to open it. Select your board and port again if needed, then upload the sketch. This reads from both sensors and writes a new row to log.csv on the SD card every second.
@@ -386,7 +392,7 @@
     </div>
 
     <div class="step">
-      <div class="step-num">4</div>
+      <div class="step-num">5</div>
       <div class="step-body">
         <h4>Let it log</h4>
         <p>Open the Serial Monitor. You should see rows of data printing, each one confirming a successful write to the SD card. Let it run for at least 3 minutes — longer if you want more data to graph.</p>

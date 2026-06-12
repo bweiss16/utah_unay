@@ -64,7 +64,7 @@ void setup() {
   if (!SD.exists(LOG_FILENAME)) {
     FsFile f = SD.open(LOG_FILENAME, FILE_WRITE);
     if (f) {
-      f.println("sample,millis,lux,temp_C,humidity_pct");
+      f.println("sample,millis,lux,temp_F,humidity_pct");
       f.close();
     }
   }
@@ -86,13 +86,13 @@ void loop() {
   // Read AHT20
   sensors_event_t humidityEvent, tempEvent;
   aht20.getEvent(&humidityEvent, &tempEvent);
-  float tempC    = tempEvent.temperature;
+  float tempF    = (tempEvent.temperature * 9.0 / 5.0) + 32.0;
   float humidity = humidityEvent.relative_humidity;
 
   // Human-readable Serial output
   Serial.print("Sample: ");     Serial.print(sampleCount);
   Serial.print("  Lux: ");      Serial.print(lux, 1);
-  Serial.print("  Temp: ");     Serial.print(tempC, 2);     Serial.print(" C");
+  Serial.print("  Temp: ");     Serial.print(tempF, 2);     Serial.print(" F");
   Serial.print("  Humidity: "); Serial.print(humidity, 1);  Serial.println(" %");
 
   // Append CSV row to SD card
@@ -101,7 +101,7 @@ void loop() {
     f.print(sampleCount);  f.print(",");
     f.print(t);            f.print(",");
     f.print(lux, 1);       f.print(",");
-    f.print(tempC, 2);     f.print(",");
+    f.print(tempF, 2);     f.print(",");
     f.println(humidity, 1);
     f.close();
   } else {

@@ -34,7 +34,7 @@ This is your home base for the workshop — it has links to both day guides, the
 
 **Step 1 — Download the workshop repository**
 
-On the workshop site, click the link next to the **SOFTWARE** heading, which will take you to the repository. On the GitHub page that opens, click the green **Code** button and select **Download ZIP**. Save it somewhere you can find it — your Desktop works fine.
+Open the Github repository at **[github.com/bweiss16/utah_unay](https://github.com/bweiss16/utah_unay)**. Click the green **Code** button and select **Download ZIP**. Save it to your Desktop.
 
 **Step 2 — Unzip the folder**
 
@@ -48,23 +48,19 @@ Your first program. You'll get the Arduino IDE talking to the Feather RP2040, up
 
 ### Steps
 
-**Step 1 — Set up Arduino IDE**
+**Step 1 — Set up the Arduino IDE**
 
-Follow the Adafruit setup tutorial at **[learn.adafruit.com/adafruit-feather-rp2040-adalogger/arduino](https://learn.adafruit.com/adafruit-feather-rp2040-adalogger/arduino)** — work through each section in order:
+> ℹ️ If the IDE is already installed and your board has been added, skip to step 2.
 
-> ℹ️ If the IDE is already installed and your board has been added, skip to step 4.
+Follow the Adafruit setup tutorial at **[learn.adafruit.com/adafruit-feather-rp2040-adalogger/arduino](https://learn.adafruit.com/adafruit-feather-rp2040-adalogger/arduino)** and work through each section until your board is set up.
 
-- [ ] 1) Add the Philhower Board Manager URL
-- [ ] 2) Add Board Support Package
-- [ ] 3) Choose Your Board
-- [ ] 4) Go to next page by selecting [Arduino Usage](https://learn.adafruit.com/adafruit-feather-rp2040-adalogger/arduino-usage). You can ignore the first section titled "RP2040 Arduino Pins" and begin with "Choose Your Board" on that page.
-- [ ] 5) Select your board in the IDE and plug it in. Continue following the tutorial from here.
-- [ ] 6) Select port
-- [ ] 7) Load the example Blink sketch
+**Step 2 — Upload and run Blink code**
 
-Do you see the LED on your board blinking? If not, try to figure out what went wrong!
+Follow the steps at **[learn.adafruit.com/adafruit-feather-rp2040-adalogger/arduino-usage](https://learn.adafruit.com/adafruit-feather-rp2040-adalogger/arduino-usage)**. After you select your board and port, you should see **Adafruit Feather RP2040 Adalogger** in bold at the top of the window. After you upload the Blink code, you should see the LED on your board start blinking. If not, try to figure out what went wrong!
 
-**Step 2 — Edit the code and experiment with timing**
+> ⚠️ When selecting your board, make sure the name matches exactly: "Adafruit Feather RP2040 Adalogger". Do not select "Adafruit Feather RP2040" — it looks similar but is a different board and will cause problems.
+
+**Step 3 — Edit the code and experiment with timing**
 
 Find the two places in the code where the `delay()` function is used. Try changing the numbers. What happens when you make one value much larger than the other? What does each number control?
 
@@ -82,7 +78,7 @@ The BH1750 communicates over **I2C** — a protocol that lets a microcontroller 
 
 ### Wiring
 
-Plug one end of a Qwiic/STEMMA QT cable into the port on your Feather and the other end into either port on the BH1750 breakout. All four connections (power, ground, SDA, SCL) are made by the cable.
+Disconnect your RP2040 from your laptop. Plug one end of a Qwiic/STEMMA QT cable into the port on your Feather and the other end into either port on the BH1750 breakout. All four connections (power, ground, SDA, SCL) are made by the cable. Plug the RP2040 back into your computer.
 
 > ⚠️ Unplug the board from USB before connecting the cable. Reconnect USB once the cable is in place.
 
@@ -100,13 +96,13 @@ Go to **File → Examples**, scroll down until you see **hp_BH1750**, and open t
 
 **Step 3 — Watch the data stream**
 
-Go to **Tools → Serial Monitor**. You should see lux values scrolling. Cover the sensor with your hand and watch the number drop.
+Click the **magnifying glass icon** in the top-right corner of the Arduino IDE to open the Serial Monitor. Make sure the baud rate dropdown is set to 9600. You should see lux values scrolling. Cover the sensor with your hand and watch the number drop.
 
 ✅ **Checkpoint:** Lux values are printing in the Serial Monitor and change when you cover the sensor.
 
 **Step 4 — Try the Serial Plotter**
 
-Close the Serial Monitor and open **Tools → Serial Plotter**. Wave your hand over the sensor and watch the line respond.
+Click the **squiggle icon** in the top-right corner of the Arduino IDE to open the Serial Plotter. Wave your hand over the sensor and watch the line respond.
 
 ✅ **Checkpoint:** You can see the live graph reacting to changes in light level.
 
@@ -122,16 +118,13 @@ The Feather's STEMMA QT port and the BH1750 breakout each have **two** Qwiic con
 
 ### Wiring
 
-Plug a second Qwiic cable into the unused port on the BH1750 and connect the other end to either port on the AHT20:
+First, disconnect your RP2040 from your computer's USB. Plug a second Qwiic cable into the unused port on the BH1750 and connect the other end to either port on the AHT20. Your chain should look like:
 
 ```
-Feather RP2040 → BH1750 → AHT20
+Feather RP2040 → BH1750 → AHT20.
 ```
 
-| Sensor | I2C Address | What it measures |
-|--------|-------------|-----------------|
-| BH1750 | `0x23` | Light (lux) |
-| AHT20  | `0x38` | Temperature (°C) & humidity (%RH) |
+Plug your RP2040 back into your computer.
 
 ### Steps
 
@@ -167,43 +160,36 @@ Right now, all your data disappears the moment you unplug the USB cable. In this
 
 Your sketch will open a file on the SD card and append a new row every few seconds. The file is saved as a **CSV** (comma-separated values) — a simple text format that any graphing tool can read. Each row will contain a reading count, lux, temperature, and humidity.
 
-### Prepare the SD Card
-
-**Step 1 — Insert the SD card into the USB reader**
-
-Slide the microSD card into the USB card reader and plug it into your computer. It should appear as a drive — like a USB flash drive. Open it to confirm it's readable.
-
-> SD cards store files just like a USB drive or your computer's hard drive. The logger will create a file called `log.csv` on the card and write a new row of sensor data to it every second.
-
-**Step 2 — Format the card and eject it**
-
-Delete any existing files on the card, then format it as **FAT32**. On Windows: right-click the drive → **Format** → set File System to **FAT32** → click Start. On Mac: open **Disk Utility**, select the card, click **Erase**, and choose **MS-DOS (FAT)**.
-
-When done, eject the card safely before removing it — always eject before pulling it out to avoid corrupting your data.
-
-> ⚠️ Get into this habit now: every time you finish a logging session, delete `log.csv` from the card before starting a new one. If you don't, new data gets appended to the old file and your graph will show mixed datasets.
-
-✅ **Checkpoint:** The card is formatted, empty, and safely ejected.
-
-**Step 3 — Insert the card into the Feather**
-
-Remove the card from the USB reader and slide it into the slot on the underside of the Feather until it clicks.
-
 ### Steps
 
-**Step 4 — Install the SD library**
+**Step 1 — Format the SD card**
+
+The SD card must be formatted as **FAT32** before the logger can write to it. Insert the card into the USB card reader and plug it into your computer.
+
+- **Windows:** Open File Explorer, right-click the card's drive, and select **Format**. Set the file system to **FAT32** and click **Start**.
+- **Mac:** Open **Disk Utility** (search for it in Spotlight). Select the SD card in the left panel, click **Erase**, choose **MS-DOS (FAT)** as the format, and click **Erase**.
+
+Once formatting is complete, eject the card and remove it from the reader.
+
+✅ **Checkpoint:** The SD card is formatted as FAT32 and ejected from the reader.
+
+**Step 2 — Install the SD library**
 
 Go to **Tools → Manage Libraries**, search for `SdFat - Adafruit Fork`, and install it. Install any dependencies when prompted.
 
 ✅ **Checkpoint:** The library is installed and visible under Sketch → Include Library.
 
-**Step 5 — Upload `log`**
+**Step 3 — Insert the SD card**
+
+Slide the card into the slot on the underside of the Feather until it clicks.
+
+**Step 4 — Upload `log`**
 
 In the unzipped repo folder, go to `sketches → log` and open `log.ino`. Select your board and port again if needed, then upload the sketch.
 
 > 📎 [github.com/bweiss16/utah_unay/tree/main/sketches/log](https://github.com/bweiss16/utah_unay/tree/main/sketches/log)
 
-**Step 6 — Let it log**
+**Step 5 — Let it log**
 
 Open the Serial Monitor. You should see a new row printing every few seconds, each confirming a successful write to the SD card. Let it run for at least 3 minutes.
 

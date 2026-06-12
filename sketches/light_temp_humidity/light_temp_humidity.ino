@@ -40,7 +40,7 @@ void setup() {
   }
 
   // CSV header so Serial Plotter labels the three traces
-  Serial.println("lux,temp_C,humidity_pct");
+  Serial.println("lux,temp_F,humidity_pct");
 }
 
 // ── Loop ──────────────────────────────────────────────────────────────────────
@@ -52,12 +52,12 @@ void loop() {
   // Read AHT20
   sensors_event_t humidityEvent, tempEvent;
   aht20.getEvent(&humidityEvent, &tempEvent);
-  float tempC    = tempEvent.temperature;
+  float tempF    = (tempEvent.temperature * 9.0 / 5.0) + 32.0;
   float humidity = humidityEvent.relative_humidity;
 
   // Print comma-separated — works in both Serial Monitor and Serial Plotter
   Serial.print(lux,      1);  Serial.print(",");
-  Serial.print(tempC,    2);  Serial.print(",");
+  Serial.print(tempF,    2);  Serial.print(",");
   Serial.println(humidity, 1);
 
   delay(1000);
